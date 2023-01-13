@@ -7,6 +7,7 @@ import "cosmos/base/query/v1beta1/pagination.proto";
 import "lottery/params.proto";
 import "lottery/lottery.proto";
 import "lottery/system_info.proto";
+import "lottery/finished_lottery.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "github.com/EmilGeorgiev/lottery/x/lottery/types";
@@ -25,6 +26,16 @@ service Query {
 	rpc SystemInfo(QueryGetSystemInfoRequest) returns (QueryGetSystemInfoResponse) {
 		option (google.api.http).get = "/EmilGeorgiev/lottery/lottery/system_info";
 	}
+// Queries a FinishedLottery by index.
+	rpc FinishedLottery(QueryGetFinishedLotteryRequest) returns (QueryGetFinishedLotteryResponse) {
+		option (google.api.http).get = "/EmilGeorgiev/lottery/lottery/finished_lottery/{index}";
+	}
+
+	// Queries a list of FinishedLottery items.
+	rpc FinishedLotteryAll(QueryAllFinishedLotteryRequest) returns (QueryAllFinishedLotteryResponse) {
+		option (google.api.http).get = "/EmilGeorgiev/lottery/lottery/finished_lottery";
+	}
+
 // this line is used by starport scaffolding # 2
 }
 
@@ -47,4 +58,22 @@ message QueryGetSystemInfoRequest {}
 message QueryGetSystemInfoResponse {
 	SystemInfo SystemInfo = 1 [(gogoproto.nullable) = false];
 }
+message QueryGetFinishedLotteryRequest {
+	  string index = 1;
+
+}
+
+message QueryGetFinishedLotteryResponse {
+	FinishedLottery finishedLottery = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllFinishedLotteryRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllFinishedLotteryResponse {
+	repeated FinishedLottery finishedLottery = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
 // this line is used by starport scaffolding # 3

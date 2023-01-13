@@ -12,6 +12,10 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	k.SetLottery(ctx, genState.Lottery)
 	k.SetSystemInfo(ctx, genState.SystemInfo)
 
+	// Set all the finishedLottery
+	for _, elem := range genState.FinishedLotteryList {
+		k.SetFinishedLottery(ctx, elem)
+	}
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
@@ -31,6 +35,7 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	if found {
 		genesis.SystemInfo = systemInfo
 	}
+	genesis.FinishedLotteryList = k.GetAllFinishedLottery(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

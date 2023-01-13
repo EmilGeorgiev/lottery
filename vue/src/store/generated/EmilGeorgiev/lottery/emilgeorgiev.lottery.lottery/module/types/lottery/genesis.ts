@@ -2,6 +2,7 @@
 import { Params } from "../lottery/params";
 import { Lottery } from "../lottery/lottery";
 import { SystemInfo } from "../lottery/system_info";
+import { FinishedLottery } from "../lottery/finished_lottery";
 import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "emilgeorgiev.lottery.lottery";
@@ -10,8 +11,9 @@ export const protobufPackage = "emilgeorgiev.lottery.lottery";
 export interface GenesisState {
   params: Params | undefined;
   lottery: Lottery | undefined;
-  /** this line is used by starport scaffolding # genesis/proto/state */
   systemInfo: SystemInfo | undefined;
+  /** this line is used by starport scaffolding # genesis/proto/state */
+  finishedLotteryList: FinishedLottery[];
 }
 
 const baseGenesisState: object = {};
@@ -27,6 +29,9 @@ export const GenesisState = {
     if (message.systemInfo !== undefined) {
       SystemInfo.encode(message.systemInfo, writer.uint32(26).fork()).ldelim();
     }
+    for (const v of message.finishedLotteryList) {
+      FinishedLottery.encode(v!, writer.uint32(34).fork()).ldelim();
+    }
     return writer;
   },
 
@@ -34,6 +39,7 @@ export const GenesisState = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGenesisState } as GenesisState;
+    message.finishedLotteryList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -46,6 +52,11 @@ export const GenesisState = {
         case 3:
           message.systemInfo = SystemInfo.decode(reader, reader.uint32());
           break;
+        case 4:
+          message.finishedLotteryList.push(
+            FinishedLottery.decode(reader, reader.uint32())
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -56,6 +67,7 @@ export const GenesisState = {
 
   fromJSON(object: any): GenesisState {
     const message = { ...baseGenesisState } as GenesisState;
+    message.finishedLotteryList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromJSON(object.params);
     } else {
@@ -70,6 +82,14 @@ export const GenesisState = {
       message.systemInfo = SystemInfo.fromJSON(object.systemInfo);
     } else {
       message.systemInfo = undefined;
+    }
+    if (
+      object.finishedLotteryList !== undefined &&
+      object.finishedLotteryList !== null
+    ) {
+      for (const e of object.finishedLotteryList) {
+        message.finishedLotteryList.push(FinishedLottery.fromJSON(e));
+      }
     }
     return message;
   },
@@ -86,11 +106,19 @@ export const GenesisState = {
       (obj.systemInfo = message.systemInfo
         ? SystemInfo.toJSON(message.systemInfo)
         : undefined);
+    if (message.finishedLotteryList) {
+      obj.finishedLotteryList = message.finishedLotteryList.map((e) =>
+        e ? FinishedLottery.toJSON(e) : undefined
+      );
+    } else {
+      obj.finishedLotteryList = [];
+    }
     return obj;
   },
 
   fromPartial(object: DeepPartial<GenesisState>): GenesisState {
     const message = { ...baseGenesisState } as GenesisState;
+    message.finishedLotteryList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromPartial(object.params);
     } else {
@@ -105,6 +133,14 @@ export const GenesisState = {
       message.systemInfo = SystemInfo.fromPartial(object.systemInfo);
     } else {
       message.systemInfo = undefined;
+    }
+    if (
+      object.finishedLotteryList !== undefined &&
+      object.finishedLotteryList !== null
+    ) {
+      for (const e of object.finishedLotteryList) {
+        message.finishedLotteryList.push(FinishedLottery.fromPartial(e));
+      }
     }
     return message;
   },

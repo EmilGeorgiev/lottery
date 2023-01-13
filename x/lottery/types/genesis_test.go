@@ -33,9 +33,31 @@ func TestGenesisState_Validate(t *testing.T) {
 					NextId:      6,
 					LotteryPool: 63,
 				},
+				FinishedLotteryList: []types.FinishedLottery{
+					{
+						Index: "0",
+					},
+					{
+						Index: "1",
+					},
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
+		},
+		{
+			desc: "duplicated finishedLottery",
+			genState: &types.GenesisState{
+				FinishedLotteryList: []types.FinishedLottery{
+					{
+						Index: "0",
+					},
+					{
+						Index: "0",
+					},
+				},
+			},
+			valid: false,
 		},
 		// this line is used by starport scaffolding # types/genesis/testcase
 	} {
@@ -53,8 +75,9 @@ func TestGenesisState_Validate(t *testing.T) {
 func TestDefaultGenesisState_ExpectedInitialNextId(t *testing.T) {
 	require.EqualValues(t,
 		&types.GenesisState{
-			Lottery:    types.Lottery{},
-			SystemInfo: types.SystemInfo{NextId: 1, LotteryPool: 0},
+			Lottery:             types.Lottery{},
+			SystemInfo:          types.SystemInfo{NextId: 1, LotteryPool: 0},
+			FinishedLotteryList: []types.FinishedLottery{},
 		},
 		types.DefaultGenesis())
 }

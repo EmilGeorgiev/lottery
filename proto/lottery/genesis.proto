@@ -5,6 +5,7 @@ import "gogoproto/gogo.proto";
 import "lottery/params.proto";
 import "lottery/lottery.proto";
 import "lottery/system_info.proto";
+import "lottery/finished_lottery.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "github.com/EmilGeorgiev/lottery/x/lottery/types";
@@ -14,5 +15,6 @@ message GenesisState {
   Params params = 1 [(gogoproto.nullable) = false];
   Lottery lottery = 2[(gogoproto.nullable) = false];
   SystemInfo systemInfo = 3[(gogoproto.nullable) = false];
+  repeated FinishedLottery finishedLotteryList = 4 [(gogoproto.nullable) = false];
   // this line is used by starport scaffolding # genesis/proto/state
 }

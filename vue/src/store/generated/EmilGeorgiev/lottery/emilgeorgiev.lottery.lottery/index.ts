@@ -1,12 +1,13 @@
 import { txClient, queryClient, MissingWalletError , registry} from './module'
 
+import { FinishedLottery } from "./module/types/lottery/finished_lottery"
 import { Lottery } from "./module/types/lottery/lottery"
 import { User } from "./module/types/lottery/lottery"
 import { Params } from "./module/types/lottery/params"
 import { SystemInfo } from "./module/types/lottery/system_info"
 
 
-export { Lottery, User, Params, SystemInfo };
+export { FinishedLottery, Lottery, User, Params, SystemInfo };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -47,8 +48,11 @@ const getDefaultState = () => {
 				Params: {},
 				Lottery: {},
 				SystemInfo: {},
+				FinishedLottery: {},
+				FinishedLotteryAll: {},
 				
 				_Structure: {
+						FinishedLottery: getStructure(FinishedLottery.fromPartial({})),
 						Lottery: getStructure(Lottery.fromPartial({})),
 						User: getStructure(User.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
@@ -98,6 +102,18 @@ export default {
 						(<any> params).query=null
 					}
 			return state.SystemInfo[JSON.stringify(params)] ?? {}
+		},
+				getFinishedLottery: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.FinishedLottery[JSON.stringify(params)] ?? {}
+		},
+				getFinishedLotteryAll: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.FinishedLotteryAll[JSON.stringify(params)] ?? {}
 		},
 				
 		getTypeStructure: (state) => (type) => {
@@ -194,6 +210,54 @@ export default {
 				return getters['getSystemInfo']( { params: {...key}, query}) ?? {}
 			} catch (e) {
 				throw new Error('QueryClient:QuerySystemInfo API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
+		
+		
+		 		
+		
+		
+		async QueryFinishedLottery({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryFinishedLottery( key.index)).data
+				
+					
+				commit('QUERY', { query: 'FinishedLottery', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryFinishedLottery', payload: { options: { all }, params: {...key},query }})
+				return getters['getFinishedLottery']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryFinishedLottery API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
+		
+		
+		 		
+		
+		
+		async QueryFinishedLotteryAll({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryFinishedLotteryAll(query)).data
+				
+					
+				while (all && (<any> value).pagination && (<any> value).pagination.next_key!=null) {
+					let next_values=(await queryClient.queryFinishedLotteryAll({...query, 'pagination.key':(<any> value).pagination.next_key})).data
+					value = mergeResults(value, next_values);
+				}
+				commit('QUERY', { query: 'FinishedLotteryAll', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryFinishedLotteryAll', payload: { options: { all }, params: {...key},query }})
+				return getters['getFinishedLotteryAll']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryFinishedLotteryAll API Node Unavailable. Could not perform query: ' + e.message)
 				
 			}
 		},
