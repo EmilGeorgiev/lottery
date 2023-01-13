@@ -113,35 +113,121 @@ func (m *QueryParamsResponse) GetParams() Params {
 	return Params{}
 }
 
+type QueryGetLotteryRequest struct {
+}
+
+func (m *QueryGetLotteryRequest) Reset()         { *m = QueryGetLotteryRequest{} }
+func (m *QueryGetLotteryRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryGetLotteryRequest) ProtoMessage()    {}
+func (*QueryGetLotteryRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_559935ceda7539d5, []int{2}
+}
+func (m *QueryGetLotteryRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetLotteryRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetLotteryRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetLotteryRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetLotteryRequest.Merge(m, src)
+}
+func (m *QueryGetLotteryRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetLotteryRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetLotteryRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetLotteryRequest proto.InternalMessageInfo
+
+type QueryGetLotteryResponse struct {
+	Lottery Lottery `protobuf:"bytes,1,opt,name=Lottery,proto3" json:"Lottery"`
+}
+
+func (m *QueryGetLotteryResponse) Reset()         { *m = QueryGetLotteryResponse{} }
+func (m *QueryGetLotteryResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryGetLotteryResponse) ProtoMessage()    {}
+func (*QueryGetLotteryResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_559935ceda7539d5, []int{3}
+}
+func (m *QueryGetLotteryResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetLotteryResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetLotteryResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetLotteryResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetLotteryResponse.Merge(m, src)
+}
+func (m *QueryGetLotteryResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetLotteryResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetLotteryResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetLotteryResponse proto.InternalMessageInfo
+
+func (m *QueryGetLotteryResponse) GetLottery() Lottery {
+	if m != nil {
+		return m.Lottery
+	}
+	return Lottery{}
+}
+
 func init() {
 	proto.RegisterType((*QueryParamsRequest)(nil), "emilgeorgiev.lottery.lottery.QueryParamsRequest")
 	proto.RegisterType((*QueryParamsResponse)(nil), "emilgeorgiev.lottery.lottery.QueryParamsResponse")
+	proto.RegisterType((*QueryGetLotteryRequest)(nil), "emilgeorgiev.lottery.lottery.QueryGetLotteryRequest")
+	proto.RegisterType((*QueryGetLotteryResponse)(nil), "emilgeorgiev.lottery.lottery.QueryGetLotteryResponse")
 }
 
 func init() { proto.RegisterFile("lottery/query.proto", fileDescriptor_559935ceda7539d5) }
 
 var fileDescriptor_559935ceda7539d5 = []byte{
-	// 309 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x90, 0xc1, 0x4a, 0x33, 0x31,
-	0x14, 0x85, 0x27, 0x3f, 0xbf, 0x5d, 0xc4, 0x5d, 0xda, 0x85, 0x94, 0x12, 0xa5, 0x14, 0x11, 0x91,
-	0x89, 0xad, 0x6f, 0x50, 0x10, 0x71, 0xa7, 0xdd, 0xe9, 0x2e, 0x53, 0x2e, 0x31, 0x30, 0x33, 0x37,
-	0x9d, 0xa4, 0xc5, 0x6e, 0x7d, 0x02, 0xc1, 0xa5, 0x6b, 0xdf, 0xa5, 0xcb, 0x82, 0x1b, 0x57, 0x22,
-	0x1d, 0x1f, 0x44, 0x3a, 0xc9, 0x08, 0x45, 0x29, 0xb8, 0xca, 0xe5, 0xe6, 0x7c, 0x27, 0x27, 0x87,
-	0x36, 0x53, 0x74, 0x0e, 0x8a, 0xb9, 0x98, 0x4c, 0xa1, 0x98, 0xc7, 0xa6, 0x40, 0x87, 0xac, 0x03,
-	0x99, 0x4e, 0x15, 0x60, 0xa1, 0x34, 0xcc, 0xe2, 0xa0, 0xa8, 0xcf, 0x76, 0x4b, 0xa1, 0xc2, 0x4a,
-	0x28, 0xd6, 0x93, 0x67, 0xda, 0x1d, 0x85, 0xa8, 0x52, 0x10, 0xd2, 0x68, 0x21, 0xf3, 0x1c, 0x9d,
-	0x74, 0x1a, 0x73, 0x1b, 0x6e, 0x8f, 0xc7, 0x68, 0x33, 0xb4, 0x22, 0x91, 0x16, 0xfc, 0x53, 0x62,
-	0xd6, 0x4f, 0xc0, 0xc9, 0xbe, 0x30, 0x52, 0xe9, 0xbc, 0x12, 0x07, 0x6d, 0xab, 0x8e, 0x64, 0x64,
-	0x21, 0xb3, 0xe0, 0xd0, 0x6d, 0x51, 0x76, 0xbd, 0xe6, 0xae, 0xaa, 0xe5, 0x08, 0x26, 0x53, 0xb0,
-	0xae, 0x7b, 0x43, 0x9b, 0x1b, 0x5b, 0x6b, 0x30, 0xb7, 0xc0, 0x86, 0xb4, 0xe1, 0xe1, 0x3d, 0x72,
-	0x40, 0x8e, 0x76, 0x07, 0xbd, 0x78, 0xdb, 0x8f, 0x62, 0x4f, 0x0f, 0xff, 0x2f, 0xde, 0xf7, 0xa3,
-	0x51, 0x20, 0x07, 0x2f, 0x84, 0xee, 0x54, 0xde, 0xec, 0x99, 0xd0, 0x86, 0x97, 0xb0, 0xd3, 0xed,
-	0x46, 0x3f, 0x13, 0xb6, 0xfb, 0x7f, 0x20, 0x7c, 0xfa, 0xee, 0xc9, 0xc3, 0xeb, 0xe7, 0xd3, 0xbf,
-	0x43, 0xd6, 0x13, 0xe7, 0x99, 0x4e, 0x2f, 0x02, 0x2a, 0xea, 0x5a, 0x36, 0xeb, 0x19, 0x5e, 0x2e,
-	0x56, 0x9c, 0x2c, 0x57, 0x9c, 0x7c, 0xac, 0x38, 0x79, 0x2c, 0x79, 0xb4, 0x2c, 0x79, 0xf4, 0x56,
-	0xf2, 0xe8, 0x56, 0x28, 0xed, 0xee, 0xa6, 0x49, 0x3c, 0xc6, 0xec, 0x77, 0xa7, 0xfb, 0xef, 0xc9,
-	0xcd, 0x0d, 0xd8, 0xa4, 0x51, 0x55, 0x7d, 0xf6, 0x15, 0x00, 0x00, 0xff, 0xff, 0x86, 0x26, 0x4b,
-	0xb0, 0x15, 0x02, 0x00, 0x00,
+	// 380 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x52, 0x4f, 0x4b, 0xf3, 0x30,
+	0x18, 0x6f, 0xc7, 0xfb, 0xee, 0x85, 0xbc, 0xb7, 0x6c, 0xea, 0x28, 0xa3, 0x4a, 0xd9, 0x54, 0x44,
+	0x1b, 0x37, 0xf5, 0x0b, 0x0c, 0xc6, 0x10, 0x3c, 0xe8, 0x6e, 0x7a, 0x32, 0x1d, 0x21, 0x16, 0xda,
+	0x3e, 0x5d, 0x93, 0x0d, 0x77, 0xf5, 0x13, 0x08, 0x1e, 0x3d, 0xfb, 0x5d, 0x76, 0x11, 0x06, 0x5e,
+	0x3c, 0x89, 0x6c, 0x7e, 0x10, 0x59, 0x9a, 0x0e, 0x74, 0x52, 0xdc, 0x29, 0xe1, 0x97, 0xdf, 0xbf,
+	0x27, 0x09, 0x2a, 0x05, 0x20, 0x25, 0x4b, 0x46, 0xa4, 0x3f, 0x60, 0xc9, 0xc8, 0x8d, 0x13, 0x90,
+	0x80, 0xab, 0x2c, 0xf4, 0x03, 0xce, 0x20, 0xe1, 0x3e, 0x1b, 0xba, 0x9a, 0x91, 0xad, 0x56, 0x99,
+	0x03, 0x07, 0x45, 0x24, 0xf3, 0x5d, 0xaa, 0xb1, 0xaa, 0x1c, 0x80, 0x07, 0x8c, 0xd0, 0xd8, 0x27,
+	0x34, 0x8a, 0x40, 0x52, 0xe9, 0x43, 0x24, 0xf4, 0xe9, 0x5e, 0x0f, 0x44, 0x08, 0x82, 0x78, 0x54,
+	0xb0, 0x34, 0x8a, 0x0c, 0x1b, 0x1e, 0x93, 0xb4, 0x41, 0x62, 0xca, 0xfd, 0x48, 0x91, 0x35, 0xb7,
+	0x9c, 0x55, 0x8a, 0x69, 0x42, 0xc3, 0xcc, 0x61, 0x2d, 0x43, 0xb3, 0x3a, 0x0a, 0x76, 0xca, 0x08,
+	0x5f, 0xcc, 0xed, 0xce, 0x15, 0xb7, 0xcb, 0xfa, 0x03, 0x26, 0xa4, 0x73, 0x89, 0x4a, 0x5f, 0x50,
+	0x11, 0x43, 0x24, 0x18, 0x6e, 0xa1, 0x62, 0xea, 0x59, 0x31, 0xb7, 0xcc, 0xdd, 0xff, 0xcd, 0x9a,
+	0x9b, 0x37, 0xa8, 0x9b, 0xaa, 0x5b, 0x7f, 0xc6, 0x6f, 0x9b, 0x46, 0x57, 0x2b, 0x9d, 0x0a, 0x5a,
+	0x57, 0xd6, 0x1d, 0x26, 0xcf, 0x52, 0x5e, 0x16, 0x7a, 0x8d, 0x36, 0x96, 0x4e, 0x74, 0x70, 0x1b,
+	0xfd, 0xd3, 0x90, 0x4e, 0xae, 0xe7, 0x27, 0x6b, 0xb2, 0x8e, 0xce, 0xb4, 0xcd, 0xe7, 0x02, 0xfa,
+	0xab, 0x22, 0xf0, 0xa3, 0x89, 0x8a, 0x69, 0x3d, 0x7c, 0x98, 0x6f, 0xb5, 0x7c, 0x3b, 0x56, 0x63,
+	0x05, 0x45, 0x3a, 0x80, 0xb3, 0x7f, 0xf7, 0xf2, 0xf1, 0x50, 0xd8, 0xc6, 0x35, 0xd2, 0x0e, 0xfd,
+	0xa0, 0xa3, 0xa5, 0xe4, 0xdb, 0x9b, 0xe8, 0x17, 0xc3, 0x4f, 0xe6, 0x62, 0x5e, 0x7c, 0xfc, 0x8b,
+	0xb0, 0xa5, 0xbb, 0xb4, 0x4e, 0x56, 0x54, 0xe9, 0x9a, 0x07, 0xaa, 0xe6, 0x0e, 0xae, 0xe7, 0xd7,
+	0xd4, 0x6b, 0xeb, 0x74, 0x3c, 0xb5, 0xcd, 0xc9, 0xd4, 0x36, 0xdf, 0xa7, 0xb6, 0x79, 0x3f, 0xb3,
+	0x8d, 0xc9, 0xcc, 0x36, 0x5e, 0x67, 0xb6, 0x71, 0x45, 0xb8, 0x2f, 0x6f, 0x06, 0x9e, 0xdb, 0x83,
+	0xf0, 0x67, 0xab, 0xdb, 0xc5, 0x4e, 0x8e, 0x62, 0x26, 0xbc, 0xa2, 0xfa, 0x8e, 0x47, 0x9f, 0x01,
+	0x00, 0x00, 0xff, 0xff, 0x20, 0xfe, 0x8c, 0xa8, 0x50, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -158,6 +244,8 @@ const _ = grpc.SupportPackageIsVersion4
 type QueryClient interface {
 	// Parameters queries the parameters of the module.
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
+	// Queries a Lottery by index.
+	Lottery(ctx context.Context, in *QueryGetLotteryRequest, opts ...grpc.CallOption) (*QueryGetLotteryResponse, error)
 }
 
 type queryClient struct {
@@ -177,10 +265,21 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 	return out, nil
 }
 
+func (c *queryClient) Lottery(ctx context.Context, in *QueryGetLotteryRequest, opts ...grpc.CallOption) (*QueryGetLotteryResponse, error) {
+	out := new(QueryGetLotteryResponse)
+	err := c.cc.Invoke(ctx, "/emilgeorgiev.lottery.lottery.Query/Lottery", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 type QueryServer interface {
 	// Parameters queries the parameters of the module.
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
+	// Queries a Lottery by index.
+	Lottery(context.Context, *QueryGetLotteryRequest) (*QueryGetLotteryResponse, error)
 }
 
 // UnimplementedQueryServer can be embedded to have forward compatible implementations.
@@ -189,6 +288,9 @@ type UnimplementedQueryServer struct {
 
 func (*UnimplementedQueryServer) Params(ctx context.Context, req *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
+}
+func (*UnimplementedQueryServer) Lottery(ctx context.Context, req *QueryGetLotteryRequest) (*QueryGetLotteryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Lottery not implemented")
 }
 
 func RegisterQueryServer(s grpc1.Server, srv QueryServer) {
@@ -213,6 +315,24 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_Lottery_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryGetLotteryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).Lottery(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/emilgeorgiev.lottery.lottery.Query/Lottery",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).Lottery(ctx, req.(*QueryGetLotteryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Query_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "emilgeorgiev.lottery.lottery.Query",
 	HandlerType: (*QueryServer)(nil),
@@ -220,6 +340,10 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Params",
 			Handler:    _Query_Params_Handler,
+		},
+		{
+			MethodName: "Lottery",
+			Handler:    _Query_Lottery_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -282,6 +406,62 @@ func (m *QueryParamsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *QueryGetLotteryRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetLotteryRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetLotteryRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryGetLotteryResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetLotteryResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetLotteryResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	{
+		size, err := m.Lottery.MarshalToSizedBuffer(dAtA[:i])
+		if err != nil {
+			return 0, err
+		}
+		i -= size
+		i = encodeVarintQuery(dAtA, i, uint64(size))
+	}
+	i--
+	dAtA[i] = 0xa
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintQuery(dAtA []byte, offset int, v uint64) int {
 	offset -= sovQuery(v)
 	base := offset
@@ -309,6 +489,26 @@ func (m *QueryParamsResponse) Size() (n int) {
 	var l int
 	_ = l
 	l = m.Params.Size()
+	n += 1 + l + sovQuery(uint64(l))
+	return n
+}
+
+func (m *QueryGetLotteryRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *QueryGetLotteryResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = m.Lottery.Size()
 	n += 1 + l + sovQuery(uint64(l))
 	return n
 }
@@ -428,6 +628,139 @@ func (m *QueryParamsResponse) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if err := m.Params.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetLotteryRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetLotteryRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetLotteryRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetLotteryResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetLotteryResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetLotteryResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Lottery", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := m.Lottery.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex

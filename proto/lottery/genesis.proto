@@ -3,6 +3,7 @@ package emilgeorgiev.lottery.lottery;
 
 import "gogoproto/gogo.proto";
 import "lottery/params.proto";
+import "lottery/lottery.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "github.com/EmilGeorgiev/lottery/x/lottery/types";
@@ -10,5 +11,6 @@ option go_package = "github.com/EmilGeorgiev/lottery/x/lottery/types";
 // GenesisState defines the lottery module's genesis state.
 message GenesisState {
   Params params = 1 [(gogoproto.nullable) = false];
+  Lottery lottery = 2[(gogoproto.nullable) = false];
   // this line is used by starport scaffolding # genesis/proto/state
 }

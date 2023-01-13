@@ -1,0 +1,13 @@
+syntax = "proto3";
+package emilgeorgiev.lottery.lottery;
+
+option go_package = "github.com/EmilGeorgiev/lottery/x/lottery/types";
+
+message Lottery {
+  repeated User users = 1;
+}
+
+message User {
+  string address = 1;
+  uint64 bet = 2;
+}

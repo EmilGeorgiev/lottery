@@ -9,10 +9,18 @@
  * ---------------------------------------------------------------
  */
 
+export interface LotteryLottery {
+  users?: LotteryUser[];
+}
+
 /**
  * Params defines the parameters for the module.
  */
 export type LotteryParams = object;
+
+export interface LotteryQueryGetLotteryResponse {
+  Lottery?: LotteryLottery;
+}
 
 /**
  * QueryParamsResponse is response type for the Query/Params RPC method.
@@ -20,6 +28,13 @@ export type LotteryParams = object;
 export interface LotteryQueryParamsResponse {
   /** params holds all the parameters of this module. */
   params?: LotteryParams;
+}
+
+export interface LotteryUser {
+  address?: string;
+
+  /** @format uint64 */
+  bet?: string;
 }
 
 export interface ProtobufAny {
@@ -229,6 +244,22 @@ export class HttpClient<SecurityDataType = unknown> {
  * @version version not set
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryLottery
+   * @summary Queries a Lottery by index.
+   * @request GET:/EmilGeorgiev/lottery/lottery/lottery
+   */
+  queryLottery = (params: RequestParams = {}) =>
+    this.request<LotteryQueryGetLotteryResponse, RpcStatus>({
+      path: `/EmilGeorgiev/lottery/lottery/lottery`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
   /**
    * No description
    *

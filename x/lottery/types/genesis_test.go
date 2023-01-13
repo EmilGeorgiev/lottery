@@ -19,9 +19,16 @@ func TestGenesisState_Validate(t *testing.T) {
 			valid:    true,
 		},
 		{
-			desc:     "valid genesis state",
+			desc: "valid genesis state",
 			genState: &types.GenesisState{
 
+				Lottery: types.Lottery{
+					Users: []*types.User{
+						{Address: "address1", Bet: 1},
+						{Address: "address2", Bet: 2},
+						{Address: "address3", Bet: 3},
+					},
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
