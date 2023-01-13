@@ -24,3 +24,7 @@ func KeyPrefix(p string) []byte {
 const (
 	LotteryKey = "Lottery-value-"
 )
+
+const (
+	SystemInfoKey = "SystemInfo-value-"
+)

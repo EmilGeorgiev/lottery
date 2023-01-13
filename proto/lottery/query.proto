@@ -6,6 +6,7 @@ import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "lottery/params.proto";
 import "lottery/lottery.proto";
+import "lottery/system_info.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "github.com/EmilGeorgiev/lottery/x/lottery/types";
@@ -19,6 +20,10 @@ service Query {
   // Queries a Lottery by index.
 	rpc Lottery(QueryGetLotteryRequest) returns (QueryGetLotteryResponse) {
 		option (google.api.http).get = "/EmilGeorgiev/lottery/lottery/lottery";
+	}
+// Queries a SystemInfo by index.
+	rpc SystemInfo(QueryGetSystemInfoRequest) returns (QueryGetSystemInfoResponse) {
+		option (google.api.http).get = "/EmilGeorgiev/lottery/lottery/system_info";
 	}
 // this line is used by starport scaffolding # 2
 }
@@ -36,5 +41,10 @@ message QueryGetLotteryRequest {}
 
 message QueryGetLotteryResponse {
 	Lottery Lottery = 1 [(gogoproto.nullable) = false];
+}
+message QueryGetSystemInfoRequest {}
+
+message QueryGetSystemInfoResponse {
+	SystemInfo SystemInfo = 1 [(gogoproto.nullable) = false];
 }
 // this line is used by starport scaffolding # 3

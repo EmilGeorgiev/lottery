@@ -22,12 +22,24 @@ export interface LotteryQueryGetLotteryResponse {
   Lottery?: LotteryLottery;
 }
 
+export interface LotteryQueryGetSystemInfoResponse {
+  SystemInfo?: LotterySystemInfo;
+}
+
 /**
  * QueryParamsResponse is response type for the Query/Params RPC method.
  */
 export interface LotteryQueryParamsResponse {
   /** params holds all the parameters of this module. */
   params?: LotteryParams;
+}
+
+export interface LotterySystemInfo {
+  /** @format uint64 */
+  nextId?: string;
+
+  /** @format uint64 */
+  lotteryPool?: string;
 }
 
 export interface LotteryUser {
@@ -271,6 +283,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryParams = (params: RequestParams = {}) =>
     this.request<LotteryQueryParamsResponse, RpcStatus>({
       path: `/EmilGeorgiev/lottery/lottery/params`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QuerySystemInfo
+   * @summary Queries a SystemInfo by index.
+   * @request GET:/EmilGeorgiev/lottery/lottery/system_info
+   */
+  querySystemInfo = (params: RequestParams = {}) =>
+    this.request<LotteryQueryGetSystemInfoResponse, RpcStatus>({
+      path: `/EmilGeorgiev/lottery/lottery/system_info`,
       method: "GET",
       format: "json",
       ...params,

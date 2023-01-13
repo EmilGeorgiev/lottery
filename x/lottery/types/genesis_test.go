@@ -29,6 +29,10 @@ func TestGenesisState_Validate(t *testing.T) {
 						{Address: "address3", Bet: 3},
 					},
 				},
+				SystemInfo: types.SystemInfo{
+					NextId:      6,
+					LotteryPool: 63,
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -44,4 +48,13 @@ func TestGenesisState_Validate(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestDefaultGenesisState_ExpectedInitialNextId(t *testing.T) {
+	require.EqualValues(t,
+		&types.GenesisState{
+			Lottery:    types.Lottery{},
+			SystemInfo: types.SystemInfo{NextId: 1, LotteryPool: 0},
+		},
+		types.DefaultGenesis())
 }

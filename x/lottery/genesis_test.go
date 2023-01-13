@@ -21,6 +21,10 @@ func TestGenesis(t *testing.T) {
 				{Address: "address3", Bet: 30},
 			},
 		},
+		SystemInfo: types.SystemInfo{
+			NextId:      63,
+			LotteryPool: 42,
+		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -33,5 +37,6 @@ func TestGenesis(t *testing.T) {
 	nullify.Fill(got)
 
 	require.Equal(t, genesisState.Lottery, got.Lottery)
+	require.Equal(t, genesisState.SystemInfo, got.SystemInfo)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

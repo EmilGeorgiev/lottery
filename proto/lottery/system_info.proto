@@ -1,0 +1,10 @@
+syntax = "proto3";
+package emilgeorgiev.lottery.lottery;
+
+option go_package = "github.com/EmilGeorgiev/lottery/x/lottery/types";
+
+message SystemInfo {
+  uint64 nextId = 1; 
+  uint64 lotteryPool = 2; 
+  
+}

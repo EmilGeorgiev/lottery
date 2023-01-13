@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { Params } from "../lottery/params";
 import { Lottery } from "../lottery/lottery";
+import { SystemInfo } from "../lottery/system_info";
 import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "emilgeorgiev.lottery.lottery";
@@ -8,8 +9,9 @@ export const protobufPackage = "emilgeorgiev.lottery.lottery";
 /** GenesisState defines the lottery module's genesis state. */
 export interface GenesisState {
   params: Params | undefined;
-  /** this line is used by starport scaffolding # genesis/proto/state */
   lottery: Lottery | undefined;
+  /** this line is used by starport scaffolding # genesis/proto/state */
+  systemInfo: SystemInfo | undefined;
 }
 
 const baseGenesisState: object = {};
@@ -21,6 +23,9 @@ export const GenesisState = {
     }
     if (message.lottery !== undefined) {
       Lottery.encode(message.lottery, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.systemInfo !== undefined) {
+      SystemInfo.encode(message.systemInfo, writer.uint32(26).fork()).ldelim();
     }
     return writer;
   },
@@ -37,6 +42,9 @@ export const GenesisState = {
           break;
         case 2:
           message.lottery = Lottery.decode(reader, reader.uint32());
+          break;
+        case 3:
+          message.systemInfo = SystemInfo.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -58,6 +66,11 @@ export const GenesisState = {
     } else {
       message.lottery = undefined;
     }
+    if (object.systemInfo !== undefined && object.systemInfo !== null) {
+      message.systemInfo = SystemInfo.fromJSON(object.systemInfo);
+    } else {
+      message.systemInfo = undefined;
+    }
     return message;
   },
 
@@ -68,6 +81,10 @@ export const GenesisState = {
     message.lottery !== undefined &&
       (obj.lottery = message.lottery
         ? Lottery.toJSON(message.lottery)
+        : undefined);
+    message.systemInfo !== undefined &&
+      (obj.systemInfo = message.systemInfo
+        ? SystemInfo.toJSON(message.systemInfo)
         : undefined);
     return obj;
   },
@@ -83,6 +100,11 @@ export const GenesisState = {
       message.lottery = Lottery.fromPartial(object.lottery);
     } else {
       message.lottery = undefined;
+    }
+    if (object.systemInfo !== undefined && object.systemInfo !== null) {
+      message.systemInfo = SystemInfo.fromPartial(object.systemInfo);
+    } else {
+      message.systemInfo = undefined;
     }
     return message;
   },

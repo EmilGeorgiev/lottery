@@ -19913,6 +19913,45 @@ paths:
                   additionalProperties: {}
       tags:
         - Query
+  /EmilGeorgiev/lottery/lottery/system_info:
+    get:
+      summary: Queries a SystemInfo by index.
+      operationId: EmilgeorgievLotteryLotterySystemInfo
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              SystemInfo:
+                type: object
+                properties:
+                  nextId:
+                    type: string
+                    format: uint64
+                  lotteryPool:
+                    type: string
+                    format: uint64
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
   /ibc/apps/interchain_accounts/controller/v1/params:
     get:
       summary: Params queries all parameters of the ICA controller submodule.
@@ -47496,6 +47535,18 @@ definitions:
                 bet:
                   type: string
                   format: uint64
+  emilgeorgiev.lottery.lottery.QueryGetSystemInfoResponse:
+    type: object
+    properties:
+      SystemInfo:
+        type: object
+        properties:
+          nextId:
+            type: string
+            format: uint64
+          lotteryPool:
+            type: string
+            format: uint64
   emilgeorgiev.lottery.lottery.QueryParamsResponse:
     type: object
     properties:
@@ -47503,6 +47554,15 @@ definitions:
         description: params holds all the parameters of this module.
         type: object
     description: QueryParamsResponse is response type for the Query/Params RPC method.
+  emilgeorgiev.lottery.lottery.SystemInfo:
+    type: object
+    properties:
+      nextId:
+        type: string
+        format: uint64
+      lotteryPool:
+        type: string
+        format: uint64
   emilgeorgiev.lottery.lottery.User:
     type: object
     properties:

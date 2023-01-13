@@ -3,9 +3,10 @@ import { txClient, queryClient, MissingWalletError , registry} from './module'
 import { Lottery } from "./module/types/lottery/lottery"
 import { User } from "./module/types/lottery/lottery"
 import { Params } from "./module/types/lottery/params"
+import { SystemInfo } from "./module/types/lottery/system_info"
 
 
-export { Lottery, User, Params };
+export { Lottery, User, Params, SystemInfo };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -45,11 +46,13 @@ const getDefaultState = () => {
 	return {
 				Params: {},
 				Lottery: {},
+				SystemInfo: {},
 				
 				_Structure: {
 						Lottery: getStructure(Lottery.fromPartial({})),
 						User: getStructure(User.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
+						SystemInfo: getStructure(SystemInfo.fromPartial({})),
 						
 		},
 		_Registry: registry,
@@ -89,6 +92,12 @@ export default {
 						(<any> params).query=null
 					}
 			return state.Lottery[JSON.stringify(params)] ?? {}
+		},
+				getSystemInfo: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.SystemInfo[JSON.stringify(params)] ?? {}
 		},
 				
 		getTypeStructure: (state) => (type) => {
@@ -163,6 +172,28 @@ export default {
 				return getters['getLottery']( { params: {...key}, query}) ?? {}
 			} catch (e) {
 				throw new Error('QueryClient:QueryLottery API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
+		
+		
+		 		
+		
+		
+		async QuerySystemInfo({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.querySystemInfo()).data
+				
+					
+				commit('QUERY', { query: 'SystemInfo', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QuerySystemInfo', payload: { options: { all }, params: {...key},query }})
+				return getters['getSystemInfo']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QuerySystemInfo API Node Unavailable. Could not perform query: ' + e.message)
 				
 			}
 		},
