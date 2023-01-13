@@ -14,9 +14,11 @@ service Msg {
 message MsgEnterLottery {
   string creator = 1;
   uint64 bet = 2;
+  string denom = 3;
 }
 
 message MsgEnterLotteryResponse {
+  uint64 registered_users = 1;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

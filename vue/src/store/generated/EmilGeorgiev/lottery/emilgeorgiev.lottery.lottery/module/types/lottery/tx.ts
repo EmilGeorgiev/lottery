@@ -7,11 +7,14 @@ export const protobufPackage = "emilgeorgiev.lottery.lottery";
 export interface MsgEnterLottery {
   creator: string;
   bet: number;
+  denom: string;
 }
 
-export interface MsgEnterLotteryResponse {}
+export interface MsgEnterLotteryResponse {
+  registered_users: number;
+}
 
-const baseMsgEnterLottery: object = { creator: "", bet: 0 };
+const baseMsgEnterLottery: object = { creator: "", bet: 0, denom: "" };
 
 export const MsgEnterLottery = {
   encode(message: MsgEnterLottery, writer: Writer = Writer.create()): Writer {
@@ -20,6 +23,9 @@ export const MsgEnterLottery = {
     }
     if (message.bet !== 0) {
       writer.uint32(16).uint64(message.bet);
+    }
+    if (message.denom !== "") {
+      writer.uint32(26).string(message.denom);
     }
     return writer;
   },
@@ -36,6 +42,9 @@ export const MsgEnterLottery = {
           break;
         case 2:
           message.bet = longToNumber(reader.uint64() as Long);
+          break;
+        case 3:
+          message.denom = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -57,6 +66,11 @@ export const MsgEnterLottery = {
     } else {
       message.bet = 0;
     }
+    if (object.denom !== undefined && object.denom !== null) {
+      message.denom = String(object.denom);
+    } else {
+      message.denom = "";
+    }
     return message;
   },
 
@@ -64,6 +78,7 @@ export const MsgEnterLottery = {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
     message.bet !== undefined && (obj.bet = message.bet);
+    message.denom !== undefined && (obj.denom = message.denom);
     return obj;
   },
 
@@ -79,14 +94,25 @@ export const MsgEnterLottery = {
     } else {
       message.bet = 0;
     }
+    if (object.denom !== undefined && object.denom !== null) {
+      message.denom = object.denom;
+    } else {
+      message.denom = "";
+    }
     return message;
   },
 };
 
-const baseMsgEnterLotteryResponse: object = {};
+const baseMsgEnterLotteryResponse: object = { registered_users: 0 };
 
 export const MsgEnterLotteryResponse = {
-  encode(_: MsgEnterLotteryResponse, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: MsgEnterLotteryResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.registered_users !== 0) {
+      writer.uint32(8).uint64(message.registered_users);
+    }
     return writer;
   },
 
@@ -99,6 +125,9 @@ export const MsgEnterLotteryResponse = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.registered_users = longToNumber(reader.uint64() as Long);
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -107,24 +136,42 @@ export const MsgEnterLotteryResponse = {
     return message;
   },
 
-  fromJSON(_: any): MsgEnterLotteryResponse {
+  fromJSON(object: any): MsgEnterLotteryResponse {
     const message = {
       ...baseMsgEnterLotteryResponse,
     } as MsgEnterLotteryResponse;
+    if (
+      object.registered_users !== undefined &&
+      object.registered_users !== null
+    ) {
+      message.registered_users = Number(object.registered_users);
+    } else {
+      message.registered_users = 0;
+    }
     return message;
   },
 
-  toJSON(_: MsgEnterLotteryResponse): unknown {
+  toJSON(message: MsgEnterLotteryResponse): unknown {
     const obj: any = {};
+    message.registered_users !== undefined &&
+      (obj.registered_users = message.registered_users);
     return obj;
   },
 
   fromPartial(
-    _: DeepPartial<MsgEnterLotteryResponse>
+    object: DeepPartial<MsgEnterLotteryResponse>
   ): MsgEnterLotteryResponse {
     const message = {
       ...baseMsgEnterLotteryResponse,
     } as MsgEnterLotteryResponse;
+    if (
+      object.registered_users !== undefined &&
+      object.registered_users !== null
+    ) {
+      message.registered_users = object.registered_users;
+    } else {
+      message.registered_users = 0;
+    }
     return message;
   },
 };

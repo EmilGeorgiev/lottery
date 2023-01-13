@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"context"
+	"fmt"
 	"strconv"
 
 	"github.com/EmilGeorgiev/lottery/x/lottery/types"
@@ -12,9 +13,8 @@ const maxBet = 100
 
 func (k msgServer) EnterLottery(goCtx context.Context, msg *types.MsgEnterLottery) (*types.MsgEnterLotteryResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-
-	if msg.Bet > maxBet {
-		return nil, types.ErrExceedMaxBet
+	if err := k.validate(ctx, msg); err != nil {
+		return nil, err
 	}
 
 	lottery, found := k.Keeper.GetLottery(ctx)
@@ -26,7 +26,6 @@ func (k msgServer) EnterLottery(goCtx context.Context, msg *types.MsgEnterLotter
 	}
 
 	lottery.RegisterNewUser(msg)
-
 	k.Keeper.SetLottery(ctx, lottery)
 
 	ctx.GasMeter().ConsumeGas(types.EnterLotteryGas, "Enter lottery")
@@ -39,4 +38,21 @@ func (k msgServer) EnterLottery(goCtx context.Context, msg *types.MsgEnterLotter
 	)
 
 	return &types.MsgEnterLotteryResponse{}, nil
+}
+
+func (k msgServer) validate(ctx sdk.Context, msg *types.MsgEnterLottery) error {
+	if msg.Bet > maxBet {
+		return fmt.Errorf(types.ErrExceedMaxBet.Error(), msg.Bet, maxBet)
+	}
+
+	adr, err := msg.GetAddress()
+	if err != nil {
+		return err
+	}
+	coin := k.bank.GetBalance(ctx, adr, msg.Denom)
+	if coin.Amount.Uint64() < (msg.Bet + types.EnterLotteryGas) {
+		return fmt.Errorf(types.ErrNotEnoughFunds.Error(), msg.Bet+types.EnterLotteryGas, coin.Amount.Uint64())
+	}
+
+	return nil
 }

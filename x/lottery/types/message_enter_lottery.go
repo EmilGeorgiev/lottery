@@ -9,10 +9,11 @@ const TypeMsgEnterLottery = "enter_lottery"
 
 var _ sdk.Msg = &MsgEnterLottery{}
 
-func NewMsgEnterLottery(creator string, bet uint64) *MsgEnterLottery {
+func NewMsgEnterLottery(creator string, bet uint64, denom string) *MsgEnterLottery {
 	return &MsgEnterLottery{
 		Creator: creator,
 		Bet:     bet,
+		Denom:   denom,
 	}
 }
 

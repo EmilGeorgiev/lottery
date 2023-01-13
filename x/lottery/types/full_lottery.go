@@ -1,5 +1,10 @@
 package types
 
+import (
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+)
+
 // RegisterNewUser register a new user in the lottery. If
 // the user already exist then the last bet is counted.
 func (m *Lottery) RegisterNewUser(msg *MsgEnterLottery) {
@@ -18,4 +23,9 @@ func (m *Lottery) RegisterNewUser(msg *MsgEnterLottery) {
 	}
 
 	m.Users = append(m.Users, u)
+}
+
+func (msg MsgEnterLottery) GetAddress() (address sdk.AccAddress, err error) {
+	address, err = sdk.AccAddressFromBech32(msg.Creator)
+	return address, sdkerrors.Wrapf(err, ErrInvalidUserAddress.Error(), msg.Creator)
 }
