@@ -47697,6 +47697,8 @@ definitions:
             bet:
               type: string
               format: uint64
+  emilgeorgiev.lottery.lottery.MsgEnterLotteryResponse:
+    type: object
   emilgeorgiev.lottery.lottery.Params:
     type: object
     description: Params defines the parameters for the module.

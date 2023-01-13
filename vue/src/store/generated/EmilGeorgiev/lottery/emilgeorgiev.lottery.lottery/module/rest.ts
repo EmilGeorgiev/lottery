@@ -21,6 +21,8 @@ export interface LotteryLottery {
   users?: LotteryUser[];
 }
 
+export type LotteryMsgEnterLotteryResponse = object;
+
 /**
  * Params defines the parameters for the module.
  */
