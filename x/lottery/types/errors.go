@@ -8,5 +8,5 @@ import (
 
 // x/lottery module sentinel errors
 var (
-	ErrSample = sdkerrors.Register(ModuleName, 1100, "sample error")
+	ErrExceedMaxBet = sdkerrors.Register(ModuleName, 1100, "The bet: %d exceed the maximum allowed: %d")
 )

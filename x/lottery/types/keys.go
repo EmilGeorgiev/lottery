@@ -15,6 +15,14 @@ const (
 
 	// MemStoreKey defines the in-memory store key
 	MemStoreKey = "mem_lottery"
+
+	EnterLotteryGas = 5
+)
+
+const (
+	EnterLotteryEventType = "enter-lottery"
+	EnterLotteryEventUser = "user"
+	EnterLotteryEventBet  = "bet"
 )
 
 func KeyPrefix(p string) []byte {
