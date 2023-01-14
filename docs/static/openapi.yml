@@ -19853,7 +19853,7 @@ paths:
                       type: string
                     winner:
                       type: string
-                    payment:
+                    reward:
                       type: string
                       format: uint64
               pagination:
@@ -19977,7 +19977,7 @@ paths:
                     type: string
                   winner:
                     type: string
-                  payment:
+                  reward:
                     type: string
                     format: uint64
         default:
@@ -20028,6 +20028,8 @@ paths:
                         bet:
                           type: string
                           format: uint64
+                        denom:
+                          type: string
         default:
           description: An unexpected error response.
           schema:
@@ -47681,7 +47683,7 @@ definitions:
         type: string
       winner:
         type: string
-      payment:
+      reward:
         type: string
         format: uint64
   emilgeorgiev.lottery.lottery.Lottery:
@@ -47697,6 +47699,8 @@ definitions:
             bet:
               type: string
               format: uint64
+            denom:
+              type: string
   emilgeorgiev.lottery.lottery.MsgEnterLotteryResponse:
     type: object
     properties:
@@ -47718,7 +47722,7 @@ definitions:
               type: string
             winner:
               type: string
-            payment:
+            reward:
               type: string
               format: uint64
       pagination:
@@ -47756,7 +47760,7 @@ definitions:
             type: string
           winner:
             type: string
-          payment:
+          reward:
             type: string
             format: uint64
   emilgeorgiev.lottery.lottery.QueryGetLotteryResponse:
@@ -47775,6 +47779,8 @@ definitions:
                 bet:
                   type: string
                   format: uint64
+                denom:
+                  type: string
   emilgeorgiev.lottery.lottery.QueryGetSystemInfoResponse:
     type: object
     properties:
@@ -47811,6 +47817,8 @@ definitions:
       bet:
         type: string
         format: uint64
+      denom:
+        type: string
   ibc.applications.interchain_accounts.controller.v1.Params:
     type: object
     properties:

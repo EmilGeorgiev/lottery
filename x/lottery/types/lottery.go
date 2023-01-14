@@ -11,6 +11,7 @@ func (m *Lottery) RegisterNewUser(msg *MsgEnterLottery) {
 	u := &User{
 		Address: msg.Creator,
 		Bet:     msg.Bet,
+		Denom:   msg.Denom,
 	}
 
 	for i, user := range m.Users {

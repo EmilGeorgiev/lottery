@@ -11,6 +11,7 @@ export interface Lottery {
 export interface User {
   address: string;
   bet: number;
+  denom: string;
 }
 
 const baseLottery: object = {};
@@ -75,7 +76,7 @@ export const Lottery = {
   },
 };
 
-const baseUser: object = { address: "", bet: 0 };
+const baseUser: object = { address: "", bet: 0, denom: "" };
 
 export const User = {
   encode(message: User, writer: Writer = Writer.create()): Writer {
@@ -84,6 +85,9 @@ export const User = {
     }
     if (message.bet !== 0) {
       writer.uint32(16).uint64(message.bet);
+    }
+    if (message.denom !== "") {
+      writer.uint32(26).string(message.denom);
     }
     return writer;
   },
@@ -100,6 +104,9 @@ export const User = {
           break;
         case 2:
           message.bet = longToNumber(reader.uint64() as Long);
+          break;
+        case 3:
+          message.denom = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -121,6 +128,11 @@ export const User = {
     } else {
       message.bet = 0;
     }
+    if (object.denom !== undefined && object.denom !== null) {
+      message.denom = String(object.denom);
+    } else {
+      message.denom = "";
+    }
     return message;
   },
 
@@ -128,6 +140,7 @@ export const User = {
     const obj: any = {};
     message.address !== undefined && (obj.address = message.address);
     message.bet !== undefined && (obj.bet = message.bet);
+    message.denom !== undefined && (obj.denom = message.denom);
     return obj;
   },
 
@@ -142,6 +155,11 @@ export const User = {
       message.bet = object.bet;
     } else {
       message.bet = 0;
+    }
+    if (object.denom !== undefined && object.denom !== null) {
+      message.denom = object.denom;
+    } else {
+      message.denom = "";
     }
     return message;
   },

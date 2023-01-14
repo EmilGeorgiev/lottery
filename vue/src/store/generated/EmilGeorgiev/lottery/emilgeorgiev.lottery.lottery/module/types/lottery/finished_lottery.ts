@@ -7,10 +7,10 @@ export const protobufPackage = "emilgeorgiev.lottery.lottery";
 export interface FinishedLottery {
   index: string;
   winner: string;
-  payment: number;
+  reward: number;
 }
 
-const baseFinishedLottery: object = { index: "", winner: "", payment: 0 };
+const baseFinishedLottery: object = { index: "", winner: "", reward: 0 };
 
 export const FinishedLottery = {
   encode(message: FinishedLottery, writer: Writer = Writer.create()): Writer {
@@ -20,8 +20,8 @@ export const FinishedLottery = {
     if (message.winner !== "") {
       writer.uint32(18).string(message.winner);
     }
-    if (message.payment !== 0) {
-      writer.uint32(24).uint64(message.payment);
+    if (message.reward !== 0) {
+      writer.uint32(24).uint64(message.reward);
     }
     return writer;
   },
@@ -40,7 +40,7 @@ export const FinishedLottery = {
           message.winner = reader.string();
           break;
         case 3:
-          message.payment = longToNumber(reader.uint64() as Long);
+          message.reward = longToNumber(reader.uint64() as Long);
           break;
         default:
           reader.skipType(tag & 7);
@@ -62,10 +62,10 @@ export const FinishedLottery = {
     } else {
       message.winner = "";
     }
-    if (object.payment !== undefined && object.payment !== null) {
-      message.payment = Number(object.payment);
+    if (object.reward !== undefined && object.reward !== null) {
+      message.reward = Number(object.reward);
     } else {
-      message.payment = 0;
+      message.reward = 0;
     }
     return message;
   },
@@ -74,7 +74,7 @@ export const FinishedLottery = {
     const obj: any = {};
     message.index !== undefined && (obj.index = message.index);
     message.winner !== undefined && (obj.winner = message.winner);
-    message.payment !== undefined && (obj.payment = message.payment);
+    message.reward !== undefined && (obj.reward = message.reward);
     return obj;
   },
 
@@ -90,10 +90,10 @@ export const FinishedLottery = {
     } else {
       message.winner = "";
     }
-    if (object.payment !== undefined && object.payment !== null) {
-      message.payment = object.payment;
+    if (object.reward !== undefined && object.reward !== null) {
+      message.reward = object.reward;
     } else {
-      message.payment = 0;
+      message.reward = 0;
     }
     return message;
   },

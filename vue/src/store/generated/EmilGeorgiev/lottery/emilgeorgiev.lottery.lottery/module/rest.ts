@@ -14,7 +14,7 @@ export interface LotteryFinishedLottery {
   winner?: string;
 
   /** @format uint64 */
-  payment?: string;
+  reward?: string;
 }
 
 export interface LotteryLottery {
@@ -79,6 +79,7 @@ export interface LotteryUser {
 
   /** @format uint64 */
   bet?: string;
+  denom?: string;
 }
 
 export interface ProtobufAny {
