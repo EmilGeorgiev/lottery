@@ -8,18 +8,13 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-func (k *Keeper) PayReward(ctx sdk.Context, winnerIndex int64, lottery types.Lottery) {
-	si, found := k.GetSystemInfo(ctx)
-	if !found {
-		panic("SystemInfo nor found")
-	}
-
+func (k *Keeper) PayReward(ctx sdk.Context, winnerIndex int64, si types.SystemInfo, lottery types.Lottery) uint64 {
 	lowestBet, highestBet := lottery.GetLowestAndHighestBet()
 	if lottery.Users[winnerIndex].Bet == lowestBet {
 		// if the winner paid the lowest bet, no reward is given, lottery total pool is carried over
 		si.LotteryPool += lottery.GetSumOfAllBets()
 		k.SetSystemInfo(ctx, si)
-		return
+		return 0
 	}
 
 	// If the winner placed the highest bet the entire pool
@@ -32,6 +27,7 @@ func (k *Keeper) PayReward(ctx sdk.Context, winnerIndex int64, lottery types.Lot
 		if err := k.bank.SendCoinsFromModuleToAccount(ctx, types.ModuleName, addr, sdk.NewCoins(coin)); err != nil {
 			panic(fmt.Sprintf(types.ErrCannotPayRewards.Error(), err.Error()))
 		}
+		return entirePool
 	}
 
 	// All other results: winner is paid the sum of all bets (without fees) in the current lottery only
@@ -41,6 +37,7 @@ func (k *Keeper) PayReward(ctx sdk.Context, winnerIndex int64, lottery types.Lot
 	if err := k.bank.SendCoinsFromModuleToAccount(ctx, types.ModuleName, addr, sdk.NewCoins(coin)); err != nil {
 		panic(fmt.Sprintf(types.ErrCannotPayRewards.Error(), err.Error()))
 	}
+	return allBets
 }
 
 func (k *Keeper) CollectBet(ctx sdk.Context, el types.MsgEnterLottery) error {
