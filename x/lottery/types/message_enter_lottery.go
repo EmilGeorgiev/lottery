@@ -17,31 +17,40 @@ func NewMsgEnterLottery(creator string, bet uint64, denom string) *MsgEnterLotte
 	}
 }
 
-func (msg *MsgEnterLottery) Route() string {
+func (m *MsgEnterLottery) Route() string {
 	return RouterKey
 }
 
-func (msg *MsgEnterLottery) Type() string {
+func (m *MsgEnterLottery) Type() string {
 	return TypeMsgEnterLottery
 }
 
-func (msg *MsgEnterLottery) GetSigners() []sdk.AccAddress {
-	creator, err := sdk.AccAddressFromBech32(msg.Creator)
+func (m *MsgEnterLottery) GetSigners() []sdk.AccAddress {
+	creator, err := sdk.AccAddressFromBech32(m.Creator)
 	if err != nil {
 		panic(err)
 	}
 	return []sdk.AccAddress{creator}
 }
 
-func (msg *MsgEnterLottery) GetSignBytes() []byte {
-	bz := ModuleCdc.MustMarshalJSON(msg)
+func (m *MsgEnterLottery) GetSignBytes() []byte {
+	bz := ModuleCdc.MustMarshalJSON(m)
 	return sdk.MustSortJSON(bz)
 }
 
-func (msg *MsgEnterLottery) ValidateBasic() error {
-	_, err := sdk.AccAddressFromBech32(msg.Creator)
+func (m *MsgEnterLottery) ValidateBasic() error {
+	_, err := sdk.AccAddressFromBech32(m.Creator)
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)
 	}
 	return nil
+}
+
+func (m *MsgEnterLottery) GetAddress() (address sdk.AccAddress, err error) {
+	address, err = sdk.AccAddressFromBech32(m.Creator)
+	return address, sdkerrors.Wrapf(err, ErrInvalidUserAddress.Error(), m.Creator)
+}
+
+func (m *MsgEnterLottery) GetBetCoin() (wager sdk.Coin) {
+	return sdk.NewCoin(m.Denom, sdk.NewInt(int64(m.Bet)))
 }

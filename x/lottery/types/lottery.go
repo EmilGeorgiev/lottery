@@ -46,18 +46,9 @@ func (m *Lottery) GetSumOfAllBets() (result uint64) {
 	return
 }
 
-func (m *Lottery) GetSumOfAllBetsPlusFee() uint64 {
+func (m *Lottery) GetSumOfAllBetsPlusFees() uint64 {
 	fees := uint64(len(m.Users) * EnterLotteryGas)
 	return m.GetSumOfAllBets() + fees
-}
-
-func (msg MsgEnterLottery) GetAddress() (address sdk.AccAddress, err error) {
-	address, err = sdk.AccAddressFromBech32(msg.Creator)
-	return address, sdkerrors.Wrapf(err, ErrInvalidUserAddress.Error(), msg.Creator)
-}
-
-func (msg *MsgEnterLottery) GetBetCoin() (wager sdk.Coin) {
-	return sdk.NewCoin(msg.Denom, sdk.NewInt(int64(msg.Bet)))
 }
 
 func GetAddress(addr string) (address sdk.AccAddress, err error) {
