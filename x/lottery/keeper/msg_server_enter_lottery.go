@@ -3,6 +3,7 @@ package keeper
 import (
 	"context"
 	"fmt"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"strconv"
 
 	"github.com/EmilGeorgiev/lottery/x/lottery/types"
@@ -25,10 +26,18 @@ func (k msgServer) EnterLottery(goCtx context.Context, msg *types.MsgEnterLotter
 		panic("Lottery not found")
 	}
 
+	addr, err := msg.GetAddress()
+	if err != nil {
+		return nil, err
+	}
+
 	lottery.RegisterNewUser(msg)
+	if err = k.bank.SendCoinsFromAccountToModule(ctx, addr, types.ModuleName, sdk.NewCoins(msg.GetBetCoin())); err != nil {
+		return nil, sdkerrors.Wrapf(err, types.ErrCanNotPayBet.Error())
+	}
 	k.Keeper.SetLottery(ctx, lottery)
 
-	ctx.GasMeter().ConsumeGas(types.EnterLotteryGas, "Enter lottery")
+	//ctx.GasMeter().ConsumeGas(types.EnterLotteryGas, "Enter lottery")
 
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(types.EnterLotteryEventType,
