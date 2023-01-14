@@ -31,9 +31,14 @@ func (k msgServer) EnterLottery(goCtx context.Context, msg *types.MsgEnterLotter
 		return nil, err
 	}
 
-	lottery.RegisterNewUser(msg)
+	oldUser := lottery.RegisterNewUser(msg)
 	if err = k.bank.SendCoinsFromAccountToModule(ctx, addr, types.ModuleName, sdk.NewCoins(msg.GetBetCoin())); err != nil {
 		return nil, sdkerrors.Wrapf(err, types.ErrCanNotPayBet.Error())
+	}
+	if oldUser != nil {
+		// if the user already has a valid transaction in the lottery
+		// we must refund the old bet and keep only the last one.
+		k.Keeper.RefundBet(ctx, oldUser)
 	}
 	k.Keeper.SetLottery(ctx, lottery)
 

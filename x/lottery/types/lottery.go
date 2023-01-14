@@ -7,7 +7,7 @@ import (
 
 // RegisterNewUser register a new user in the lottery. If
 // the user already exist then the last bet is counted.
-func (m *Lottery) RegisterNewUser(msg *MsgEnterLottery) {
+func (m *Lottery) RegisterNewUser(msg *MsgEnterLottery) *User {
 	u := &User{
 		Address: msg.Creator,
 		Bet:     msg.Bet,
@@ -18,12 +18,13 @@ func (m *Lottery) RegisterNewUser(msg *MsgEnterLottery) {
 		if user.Address == u.Address {
 			// if the same user has new lottery transactions, then only the last
 			// one counts, counter doesn’t increase on substitution.
+			old := user
 			m.Users[i] = u
-			return
+			return old
 		}
 	}
-
 	m.Users = append(m.Users, u)
+	return nil
 }
 
 func (m *Lottery) GetLowestAndHighestBet() (uint64, uint64) {

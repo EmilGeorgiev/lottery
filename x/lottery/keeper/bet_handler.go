@@ -21,7 +21,7 @@ func (k *Keeper) PayReward(ctx sdk.Context, winnerIndex int64, si types.SystemIn
 	// (not only from current lottery) is paid to the winner (including fees)
 	if lottery.Users[winnerIndex].Bet == highestBet {
 		currentLotteryBetsPlusFees := lottery.GetSumOfAllBetsPlusFees()
-		addr, _ := types.GetAddress(lottery.Users[0].Address)
+		addr, _ := types.GetAddress(lottery.Users[winnerIndex].Address)
 		entirePool := currentLotteryBetsPlusFees + si.LotteryPool
 		coin := sdk.NewCoin(lottery.Users[winnerIndex].Denom, sdk.NewInt(int64(entirePool)))
 		if err := k.bank.SendCoinsFromModuleToAccount(ctx, types.ModuleName, addr, sdk.NewCoins(coin)); err != nil {
@@ -32,7 +32,7 @@ func (k *Keeper) PayReward(ctx sdk.Context, winnerIndex int64, si types.SystemIn
 
 	// All other results: winner is paid the sum of all bets (without fees) in the current lottery only
 	allBets := lottery.GetSumOfAllBets()
-	addr, _ := types.GetAddress(lottery.Users[0].Address)
+	addr, _ := types.GetAddress(lottery.Users[winnerIndex].Address)
 	coin := sdk.NewCoin(lottery.Users[winnerIndex].Denom, sdk.NewInt(int64(allBets)))
 	if err := k.bank.SendCoinsFromModuleToAccount(ctx, types.ModuleName, addr, sdk.NewCoins(coin)); err != nil {
 		panic(fmt.Sprintf(types.ErrCannotPayRewards.Error(), err.Error()))
@@ -51,6 +51,10 @@ func (k *Keeper) CollectBet(ctx sdk.Context, el types.MsgEnterLottery) error {
 	return nil
 }
 
-func (k *Keeper) RefundBet(ctx sdk.Context, lottery types.Lottery) {
-	// TODO
+func (k *Keeper) RefundBet(ctx sdk.Context, u *types.User) {
+	addr, _ := types.GetAddress(u.Address)
+	coin := sdk.NewCoin(u.Denom, sdk.NewInt(int64(u.Bet)))
+	if err := k.bank.SendCoinsFromModuleToAccount(ctx, types.ModuleName, addr, sdk.NewCoins(coin)); err != nil {
+		panic(fmt.Sprintf(types.ErrCannotPayRewards.Error(), err.Error()))
+	}
 }
