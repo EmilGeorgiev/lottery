@@ -10,4 +10,5 @@ message Lottery {
 message User {
   string address = 1;
   uint64 bet = 2;
+  string denom = 3;
 }
