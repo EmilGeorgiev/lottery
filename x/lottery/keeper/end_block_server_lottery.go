@@ -37,7 +37,7 @@ func (k *Keeper) ChooseWinner(goCtx context.Context) {
 	winnerIndex := getWinnerIndex(lottery.Users)
 	reward := k.PayReward(ctx, winnerIndex, si, lottery)
 	fl := types.FinishedLottery{
-		Index:  si.NextId,
+		Index:  strconv.FormatUint(si.NextId, 10),
 		Winner: lottery.Users[winnerIndex].Address,
 		Reward: reward,
 	}

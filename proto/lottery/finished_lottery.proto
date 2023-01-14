@@ -4,7 +4,7 @@ package emilgeorgiev.lottery.lottery;
 option go_package = "github.com/EmilGeorgiev/lottery/x/lottery/types";
 
 message FinishedLottery {
-  uint64 index = 1;
+  string index = 1;
   string winner = 2; 
   uint64 reward = 3;
   
