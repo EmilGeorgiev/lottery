@@ -25,7 +25,42 @@ func (m *Lottery) RegisterNewUser(msg *MsgEnterLottery) {
 	m.Users = append(m.Users, u)
 }
 
+func (m *Lottery) GetLowestAndHighestBet() (uint64, uint64) {
+	lowest := m.Users[0].Bet
+	highest := m.Users[0].Bet
+	for _, u := range m.Users[1:] {
+		if u.Bet < lowest {
+			lowest = u.Bet
+		}
+		if u.Bet > highest {
+			highest = u.Bet
+		}
+	}
+	return lowest, highest
+}
+
+func (m *Lottery) GetSumOfAllBets() (result uint64) {
+	for _, u := range m.Users {
+		result += u.Bet
+	}
+	return
+}
+
+func (m *Lottery) GetSumOfAllBetsPlusFee() uint64 {
+	fees := uint64(len(m.Users) * EnterLotteryGas)
+	return m.GetSumOfAllBets() + fees
+}
+
 func (msg MsgEnterLottery) GetAddress() (address sdk.AccAddress, err error) {
 	address, err = sdk.AccAddressFromBech32(msg.Creator)
 	return address, sdkerrors.Wrapf(err, ErrInvalidUserAddress.Error(), msg.Creator)
+}
+
+func (msg *MsgEnterLottery) GetBetCoin() (wager sdk.Coin) {
+	return sdk.NewCoin(msg.Denom, sdk.NewInt(int64(msg.Bet)))
+}
+
+func GetAddress(addr string) (address sdk.AccAddress, err error) {
+	address, err = sdk.AccAddressFromBech32(addr)
+	return address, sdkerrors.Wrapf(err, ErrInvalidUserAddress.Error(), addr)
 }
