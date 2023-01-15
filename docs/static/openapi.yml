@@ -19856,6 +19856,21 @@ paths:
                     reward:
                       type: string
                       format: uint64
+                    users:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          address:
+                            type: string
+                          bet:
+                            type: string
+                            format: uint64
+                          denom:
+                            type: string
+                    winner_index:
+                      type: string
+                      format: uint64
               pagination:
                 type: object
                 properties:
@@ -19978,6 +19993,21 @@ paths:
                   winner:
                     type: string
                   reward:
+                    type: string
+                    format: uint64
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        address:
+                          type: string
+                        bet:
+                          type: string
+                          format: uint64
+                        denom:
+                          type: string
+                  winner_index:
                     type: string
                     format: uint64
         default:
@@ -47686,6 +47716,21 @@ definitions:
       reward:
         type: string
         format: uint64
+      users:
+        type: array
+        items:
+          type: object
+          properties:
+            address:
+              type: string
+            bet:
+              type: string
+              format: uint64
+            denom:
+              type: string
+      winner_index:
+        type: string
+        format: uint64
   emilgeorgiev.lottery.lottery.Lottery:
     type: object
     properties:
@@ -47725,6 +47770,21 @@ definitions:
             reward:
               type: string
               format: uint64
+            users:
+              type: array
+              items:
+                type: object
+                properties:
+                  address:
+                    type: string
+                  bet:
+                    type: string
+                    format: uint64
+                  denom:
+                    type: string
+            winner_index:
+              type: string
+              format: uint64
       pagination:
         type: object
         properties:
@@ -47761,6 +47821,21 @@ definitions:
           winner:
             type: string
           reward:
+            type: string
+            format: uint64
+          users:
+            type: array
+            items:
+              type: object
+              properties:
+                address:
+                  type: string
+                bet:
+                  type: string
+                  format: uint64
+                denom:
+                  type: string
+          winner_index:
             type: string
             format: uint64
   emilgeorgiev.lottery.lottery.QueryGetLotteryResponse:

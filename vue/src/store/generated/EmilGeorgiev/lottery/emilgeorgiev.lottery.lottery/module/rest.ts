@@ -15,6 +15,10 @@ export interface LotteryFinishedLottery {
 
   /** @format uint64 */
   reward?: string;
+  users?: LotteryUser[];
+
+  /** @format uint64 */
+  winner_index?: string;
 }
 
 export interface LotteryLottery {

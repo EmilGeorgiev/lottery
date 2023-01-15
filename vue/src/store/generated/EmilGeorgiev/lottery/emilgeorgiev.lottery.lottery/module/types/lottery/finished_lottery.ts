@@ -1,6 +1,7 @@
 /* eslint-disable */
 import * as Long from "long";
 import { util, configure, Writer, Reader } from "protobufjs/minimal";
+import { User } from "../lottery/lottery";
 
 export const protobufPackage = "emilgeorgiev.lottery.lottery";
 
@@ -8,9 +9,16 @@ export interface FinishedLottery {
   index: string;
   winner: string;
   reward: number;
+  users: User[];
+  winner_index: number;
 }
 
-const baseFinishedLottery: object = { index: "", winner: "", reward: 0 };
+const baseFinishedLottery: object = {
+  index: "",
+  winner: "",
+  reward: 0,
+  winner_index: 0,
+};
 
 export const FinishedLottery = {
   encode(message: FinishedLottery, writer: Writer = Writer.create()): Writer {
@@ -23,6 +31,12 @@ export const FinishedLottery = {
     if (message.reward !== 0) {
       writer.uint32(24).uint64(message.reward);
     }
+    for (const v of message.users) {
+      User.encode(v!, writer.uint32(34).fork()).ldelim();
+    }
+    if (message.winner_index !== 0) {
+      writer.uint32(40).uint64(message.winner_index);
+    }
     return writer;
   },
 
@@ -30,6 +44,7 @@ export const FinishedLottery = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseFinishedLottery } as FinishedLottery;
+    message.users = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -42,6 +57,12 @@ export const FinishedLottery = {
         case 3:
           message.reward = longToNumber(reader.uint64() as Long);
           break;
+        case 4:
+          message.users.push(User.decode(reader, reader.uint32()));
+          break;
+        case 5:
+          message.winner_index = longToNumber(reader.uint64() as Long);
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -52,6 +73,7 @@ export const FinishedLottery = {
 
   fromJSON(object: any): FinishedLottery {
     const message = { ...baseFinishedLottery } as FinishedLottery;
+    message.users = [];
     if (object.index !== undefined && object.index !== null) {
       message.index = String(object.index);
     } else {
@@ -67,6 +89,16 @@ export const FinishedLottery = {
     } else {
       message.reward = 0;
     }
+    if (object.users !== undefined && object.users !== null) {
+      for (const e of object.users) {
+        message.users.push(User.fromJSON(e));
+      }
+    }
+    if (object.winner_index !== undefined && object.winner_index !== null) {
+      message.winner_index = Number(object.winner_index);
+    } else {
+      message.winner_index = 0;
+    }
     return message;
   },
 
@@ -75,11 +107,19 @@ export const FinishedLottery = {
     message.index !== undefined && (obj.index = message.index);
     message.winner !== undefined && (obj.winner = message.winner);
     message.reward !== undefined && (obj.reward = message.reward);
+    if (message.users) {
+      obj.users = message.users.map((e) => (e ? User.toJSON(e) : undefined));
+    } else {
+      obj.users = [];
+    }
+    message.winner_index !== undefined &&
+      (obj.winner_index = message.winner_index);
     return obj;
   },
 
   fromPartial(object: DeepPartial<FinishedLottery>): FinishedLottery {
     const message = { ...baseFinishedLottery } as FinishedLottery;
+    message.users = [];
     if (object.index !== undefined && object.index !== null) {
       message.index = object.index;
     } else {
@@ -94,6 +134,16 @@ export const FinishedLottery = {
       message.reward = object.reward;
     } else {
       message.reward = 0;
+    }
+    if (object.users !== undefined && object.users !== null) {
+      for (const e of object.users) {
+        message.users.push(User.fromPartial(e));
+      }
+    }
+    if (object.winner_index !== undefined && object.winner_index !== null) {
+      message.winner_index = object.winner_index;
+    } else {
+      message.winner_index = 0;
     }
     return message;
   },

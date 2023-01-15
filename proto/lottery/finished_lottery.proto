@@ -1,12 +1,15 @@
 syntax = "proto3";
 package emilgeorgiev.lottery.lottery;
 
+import "lottery/lottery.proto";
+
 option go_package = "github.com/EmilGeorgiev/lottery/x/lottery/types";
 
 message FinishedLottery {
   string index = 1;
   string winner = 2; 
   uint64 reward = 3;
-  
+  repeated User users = 4;
+  uint64 winner_index = 5;
 }
 
