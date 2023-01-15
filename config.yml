@@ -1,3 +1,4 @@
+version: 1
 accounts:
   - name: alice
     coins: ["20000token", "200000000stake"]
@@ -43,9 +44,9 @@ accounts:
     coins: ["500token"]
   - name: client20
     coins: ["500token"]
-validator:
-  name: alice
-  staked: "100000000stake"
+validators:
+  - name: alice
+    bonded: "100000000stake"
 client:
   openapi:
     path: "docs/static/openapi.yml"
