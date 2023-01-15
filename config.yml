@@ -54,3 +54,7 @@ client:
 faucet:
   name: bob
   coins: ["5token", "100000stake"]
+
+build:
+  binary: lotteryd
+  main: ./cmd/lotteryd
