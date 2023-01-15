@@ -53,6 +53,6 @@ func getWinnerIndex(users []*types.User) int64 {
 	data, _ := json.Marshal(users)
 	hexDecimal := fmt.Sprintf("%x", md5.Sum(data))
 	r, _ := strconv.ParseInt("0x"+hexDecimal, 0, 64)
-	winnerIndex := (r ^ 0xFFFF) % int64(len(users))
+	winnerIndex := (r & 0xFFFF) % int64(len(users))
 	return winnerIndex
 }

@@ -19,6 +19,16 @@ func TestGetWinner(t *testing.T) {
 		{Address: "cosmos1p2y92270yqggk2du3d3a2yuqgzzf9fluaey946", Bet: 8, Denom: "token"},
 		{Address: "cosmos1l6ptczusekwszctm9e6sjkr9sgg3jyvcskxzt4", Bet: 9, Denom: "token"},
 		{Address: "cosmos1xfzyzyxy9ynmwpcpk6tn4635tarcqdfu42cxh8", Bet: 10, Denom: "token"},
+		{Address: "cosmos13qvqehe2yv5fxeah7363pd8w32x6fgql0jnkzs", Bet: 11, Denom: "token"},
+		{Address: "cosmos13af4dg2putus363llvq0kjsrfct42ntv26gd6d", Bet: 12, Denom: "token"},
+		{Address: "cosmos1rmg598ae3r62euwqq2j4tjmj9kdrjmnzjh9000", Bet: 13, Denom: "token"},
+		{Address: "cosmos1t9p63h6k5s7mhz2uykn6hnjmtssc0l0lt9s7fj", Bet: 14, Denom: "token"},
+		{Address: "cosmos13nt74j5t4y3hhfjx40p42hdc2p308q48uccth3", Bet: 15, Denom: "token"},
+		{Address: "cosmos102qnej88ljdkl2lsgf23vauhqgmwte8jra54xq", Bet: 16, Denom: "token"},
+		{Address: "cosmos1md6g8sak7zm4wjyjpht4shaa7mhcgxkhfgch6w", Bet: 17, Denom: "token"},
+		{Address: "cosmos1jgwue7rjjglesw6l86ydedlsepl6ulz04hg3qp", Bet: 18, Denom: "token"},
+		{Address: "cosmos1zml56sa8ngxrs0txsv5hqujjgcerr6fmr6a95t", Bet: 19, Denom: "token"},
+		{Address: "cosmos1xfzyzyxy9ynmwpcpk6tn4635tarcqdfu42cxh9", Bet: 20, Denom: "token"},
 	}
 	got := getWinnerIndex(u)
 	fmt.Println(got)
