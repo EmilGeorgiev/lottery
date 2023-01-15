@@ -8,7 +8,6 @@ import (
 func main() {
 	users := getUsers()
 	for i, u := range users {
-		fmt.Println(u.address)
 		bet := fmt.Sprintf("%d", i+1)
 		cmd := exec.Command("lotteryd", "tx", "lottery", "enter-lottery", bet, "token", "--from", u.address, "-y")
 		b, err := cmd.Output()
@@ -18,11 +17,8 @@ func main() {
 
 	cmd := exec.Command("lotteryd", "query", "lottery", "show-lottery")
 	out, err := cmd.Output()
-	if err != nil {
-		// if there was any error, print it here
-		fmt.Println("could not run command: ", err)
-	}
-	fmt.Println("Oytput: ", string(out))
+	fmt.Println("could not run command: ", err)
+	fmt.Println("Output: ", string(out))
 
 	cmd = exec.Command("lotteryd", "query", "lottery", "list-finished-lottery")
 	out, err = cmd.Output()
@@ -30,7 +26,7 @@ func main() {
 		// if there was any error, print it here
 		fmt.Println("could not run command: ", err)
 	}
-	fmt.Println("Oytput: ", string(out))
+	fmt.Println("Output: ", string(out))
 }
 
 type user struct {
