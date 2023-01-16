@@ -3,8 +3,8 @@ package keeper
 import (
 	"context"
 	"crypto/md5"
-	"encoding/json"
 	"fmt"
+	"github.com/gogo/protobuf/proto"
 	"strconv"
 
 	"github.com/EmilGeorgiev/lottery/x/lottery/types"
@@ -52,7 +52,11 @@ func (k *Keeper) ChooseWinner(goCtx context.Context) {
 }
 
 func getWinnerIndex(txs []*types.EnterLotteryTx) int64 {
-	data, _ := json.Marshal(txs)
+	var data []byte
+	for _, tx := range txs {
+		b, _ := proto.Marshal(tx)
+		data = append(data, b...)
+	}
 	b := md5.Sum(data)
 	hex := fmt.Sprintf("%x", b[len(b)-2:])
 	n, _ := strconv.ParseInt(hex, 16, 64)
