@@ -19,6 +19,11 @@ const (
 	EnterLotteryGas = 5
 
 	DeadlineLayout = "2006-01-02 15:04:05.999999999 +0000 UTC"
+
+	TxFee = 5
+
+	// FeeCollectorName the root string for the fee collector account address
+	FeeCollectorName = "fee_collector"
 )
 
 const (

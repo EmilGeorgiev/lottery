@@ -35,7 +35,7 @@ func (k *Keeper) ChooseWinner(goCtx context.Context) {
 	// TODO check whether the validator has transaction.
 
 	winnerIndex := getWinnerIndex(lottery.EnterLotteryTxs)
-	reward := k.PayReward(ctx, winnerIndex, si, lottery)
+	reward := k.PayReward(ctx, winnerIndex, &si, lottery)
 	fl := types.FinishedLottery{
 		Index:           strconv.FormatUint(si.NextId, 10),
 		Winner:          lottery.EnterLotteryTxs[winnerIndex].UserAddress,
