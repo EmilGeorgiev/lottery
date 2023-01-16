@@ -53,8 +53,8 @@ func (k *Keeper) ChooseWinner(goCtx context.Context) {
 
 func getWinnerIndex(users []*types.User) int64 {
 	data, _ := json.Marshal(users)
-	hexDecimal := fmt.Sprintf("%x", md5.Sum(data))
-	r, _ := strconv.ParseInt("0x"+hexDecimal, 0, 64)
-	winnerIndex := (r & 0xFFFF) % int64(len(users))
-	return winnerIndex
+	b := md5.Sum(data)
+	hex := fmt.Sprintf("%x", b[len(b)-2:])
+	n, _ := strconv.ParseInt(hex, 16, 64)
+	return n % int64(len(users))
 }
