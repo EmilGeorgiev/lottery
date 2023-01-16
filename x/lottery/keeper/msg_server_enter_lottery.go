@@ -31,7 +31,7 @@ func (k msgServer) EnterLottery(goCtx context.Context, msg *types.MsgEnterLotter
 		return nil, err
 	}
 
-	oldUser := lottery.RegisterNewUser(msg)
+	oldUser := lottery.RegisterNewTx(msg)
 	if err = k.bank.SendCoinsFromAccountToModule(ctx, addr, types.ModuleName, sdk.NewCoins(msg.GetBetCoin())); err != nil {
 		return nil, sdkerrors.Wrapf(err, types.ErrCanNotPayBet.Error())
 	}

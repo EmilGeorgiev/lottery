@@ -9,7 +9,7 @@ message FinishedLottery {
   string index = 1;
   string winner = 2; 
   uint64 reward = 3;
-  repeated User users = 4;
+  repeated EnterLotteryTx enter_lottery_txs = 4;
   uint64 winner_index = 5;
 }
 

@@ -21,7 +21,7 @@ func (k *Keeper) ChooseWinner(goCtx context.Context) {
 		panic("Lottery not found")
 	}
 
-	if len(lottery.Users) < minUsersPerLottery {
+	if len(lottery.EnterLotteryTxs) < minUsersPerLottery {
 		// we choose the winner only if the lottery
 		// has 10 or more valid lottery transactions
 		return
@@ -34,14 +34,14 @@ func (k *Keeper) ChooseWinner(goCtx context.Context) {
 
 	// TODO check whether the validator has transaction.
 
-	winnerIndex := getWinnerIndex(lottery.Users)
+	winnerIndex := getWinnerIndex(lottery.EnterLotteryTxs)
 	reward := k.PayReward(ctx, winnerIndex, si, lottery)
 	fl := types.FinishedLottery{
-		Index:       strconv.FormatUint(si.NextId, 10),
-		Winner:      lottery.Users[winnerIndex].Address,
-		Reward:      reward,
-		Users:       lottery.Users,
-		WinnerIndex: uint64(winnerIndex),
+		Index:           strconv.FormatUint(si.NextId, 10),
+		Winner:          lottery.EnterLotteryTxs[winnerIndex].UserAddress,
+		Reward:          reward,
+		EnterLotteryTxs: lottery.EnterLotteryTxs,
+		WinnerIndex:     uint64(winnerIndex),
 	}
 	k.SetFinishedLottery(ctx, fl)
 	si.NextId++
@@ -51,10 +51,10 @@ func (k *Keeper) ChooseWinner(goCtx context.Context) {
 
 }
 
-func getWinnerIndex(users []*types.User) int64 {
-	data, _ := json.Marshal(users)
+func getWinnerIndex(txs []*types.EnterLotteryTx) int64 {
+	data, _ := json.Marshal(txs)
 	b := md5.Sum(data)
 	hex := fmt.Sprintf("%x", b[len(b)-2:])
 	n, _ := strconv.ParseInt(hex, 16, 64)
-	return n % int64(len(users))
+	return n % int64(len(txs))
 }

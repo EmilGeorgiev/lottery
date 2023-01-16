@@ -23,10 +23,10 @@ func TestGenesisState_Validate(t *testing.T) {
 			genState: &types.GenesisState{
 
 				Lottery: types.Lottery{
-					Users: []*types.User{
-						{Address: "address1", Bet: 1},
-						{Address: "address2", Bet: 2},
-						{Address: "address3", Bet: 3},
+					EnterLotteryTxs: []*types.EnterLotteryTx{
+						{UserAddress: "address1", Bet: 1},
+						{UserAddress: "address2", Bet: 2},
+						{UserAddress: "address3", Bet: 3},
 					},
 				},
 				SystemInfo: types.SystemInfo{

@@ -23,7 +23,7 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type Lottery struct {
-	Users []*User `protobuf:"bytes,1,rep,name=users,proto3" json:"users,omitempty"`
+	EnterLotteryTxs []*EnterLotteryTx `protobuf:"bytes,1,rep,name=enter_lottery_txs,json=enterLotteryTxs,proto3" json:"enter_lottery_txs,omitempty"`
 }
 
 func (m *Lottery) Reset()         { *m = Lottery{} }
@@ -59,31 +59,32 @@ func (m *Lottery) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Lottery proto.InternalMessageInfo
 
-func (m *Lottery) GetUsers() []*User {
+func (m *Lottery) GetEnterLotteryTxs() []*EnterLotteryTx {
 	if m != nil {
-		return m.Users
+		return m.EnterLotteryTxs
 	}
 	return nil
 }
 
-type User struct {
-	Address string `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
-	Bet     uint64 `protobuf:"varint,2,opt,name=bet,proto3" json:"bet,omitempty"`
-	Denom   string `protobuf:"bytes,3,opt,name=denom,proto3" json:"denom,omitempty"`
+type EnterLotteryTx struct {
+	UserAddress string `protobuf:"bytes,1,opt,name=user_address,json=userAddress,proto3" json:"user_address,omitempty"`
+	Bet         uint64 `protobuf:"varint,2,opt,name=bet,proto3" json:"bet,omitempty"`
+	Denom       string `protobuf:"bytes,3,opt,name=denom,proto3" json:"denom,omitempty"`
+	Datetime    string `protobuf:"bytes,4,opt,name=datetime,proto3" json:"datetime,omitempty"`
 }
 
-func (m *User) Reset()         { *m = User{} }
-func (m *User) String() string { return proto.CompactTextString(m) }
-func (*User) ProtoMessage()    {}
-func (*User) Descriptor() ([]byte, []int) {
+func (m *EnterLotteryTx) Reset()         { *m = EnterLotteryTx{} }
+func (m *EnterLotteryTx) String() string { return proto.CompactTextString(m) }
+func (*EnterLotteryTx) ProtoMessage()    {}
+func (*EnterLotteryTx) Descriptor() ([]byte, []int) {
 	return fileDescriptor_e2b8635f78dae0e2, []int{1}
 }
-func (m *User) XXX_Unmarshal(b []byte) error {
+func (m *EnterLotteryTx) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *User) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *EnterLotteryTx) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_User.Marshal(b, m, deterministic)
+		return xxx_messageInfo_EnterLotteryTx.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -93,62 +94,71 @@ func (m *User) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-func (m *User) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_User.Merge(m, src)
+func (m *EnterLotteryTx) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EnterLotteryTx.Merge(m, src)
 }
-func (m *User) XXX_Size() int {
+func (m *EnterLotteryTx) XXX_Size() int {
 	return m.Size()
 }
-func (m *User) XXX_DiscardUnknown() {
-	xxx_messageInfo_User.DiscardUnknown(m)
+func (m *EnterLotteryTx) XXX_DiscardUnknown() {
+	xxx_messageInfo_EnterLotteryTx.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_User proto.InternalMessageInfo
+var xxx_messageInfo_EnterLotteryTx proto.InternalMessageInfo
 
-func (m *User) GetAddress() string {
+func (m *EnterLotteryTx) GetUserAddress() string {
 	if m != nil {
-		return m.Address
+		return m.UserAddress
 	}
 	return ""
 }
 
-func (m *User) GetBet() uint64 {
+func (m *EnterLotteryTx) GetBet() uint64 {
 	if m != nil {
 		return m.Bet
 	}
 	return 0
 }
 
-func (m *User) GetDenom() string {
+func (m *EnterLotteryTx) GetDenom() string {
 	if m != nil {
 		return m.Denom
 	}
 	return ""
 }
 
+func (m *EnterLotteryTx) GetDatetime() string {
+	if m != nil {
+		return m.Datetime
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*Lottery)(nil), "emilgeorgiev.lottery.lottery.Lottery")
-	proto.RegisterType((*User)(nil), "emilgeorgiev.lottery.lottery.User")
+	proto.RegisterType((*EnterLotteryTx)(nil), "emilgeorgiev.lottery.lottery.EnterLotteryTx")
 }
 
 func init() { proto.RegisterFile("lottery/lottery.proto", fileDescriptor_e2b8635f78dae0e2) }
 
 var fileDescriptor_e2b8635f78dae0e2 = []byte{
-	// 213 bytes of a gzipped FileDescriptorProto
+	// 254 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0xcd, 0xc9, 0x2f, 0x29,
 	0x49, 0x2d, 0xaa, 0xd4, 0x87, 0xd2, 0x7a, 0x05, 0x45, 0xf9, 0x25, 0xf9, 0x42, 0x32, 0xa9, 0xb9,
-	0x99, 0x39, 0xe9, 0xa9, 0xf9, 0x45, 0xe9, 0x99, 0xa9, 0x65, 0x7a, 0x30, 0x39, 0x28, 0xad, 0xe4,
-	0xcc, 0xc5, 0xee, 0x03, 0x61, 0x0a, 0x59, 0x70, 0xb1, 0x96, 0x16, 0xa7, 0x16, 0x15, 0x4b, 0x30,
-	0x2a, 0x30, 0x6b, 0x70, 0x1b, 0x29, 0xe9, 0xe1, 0xd3, 0xa8, 0x17, 0x5a, 0x9c, 0x5a, 0x14, 0x04,
-	0xd1, 0xa0, 0xe4, 0xc1, 0xc5, 0x02, 0xe2, 0x0a, 0x49, 0x70, 0xb1, 0x27, 0xa6, 0xa4, 0x14, 0xa5,
-	0x16, 0x83, 0xcc, 0x60, 0xd4, 0xe0, 0x0c, 0x82, 0x71, 0x85, 0x04, 0xb8, 0x98, 0x93, 0x52, 0x4b,
-	0x24, 0x98, 0x14, 0x18, 0x35, 0x58, 0x82, 0x40, 0x4c, 0x21, 0x11, 0x2e, 0xd6, 0x94, 0xd4, 0xbc,
-	0xfc, 0x5c, 0x09, 0x66, 0xb0, 0x4a, 0x08, 0xc7, 0xc9, 0xf3, 0xc4, 0x23, 0x39, 0xc6, 0x0b, 0x8f,
-	0xe4, 0x18, 0x1f, 0x3c, 0x92, 0x63, 0x9c, 0xf0, 0x58, 0x8e, 0xe1, 0xc2, 0x63, 0x39, 0x86, 0x1b,
-	0x8f, 0xe5, 0x18, 0xa2, 0xf4, 0xd3, 0x33, 0x4b, 0x32, 0x4a, 0x93, 0xf4, 0x92, 0xf3, 0x73, 0xf5,
-	0x5d, 0x73, 0x33, 0x73, 0xdc, 0xa1, 0x0e, 0x83, 0xf9, 0x56, 0xbf, 0x02, 0xce, 0x2a, 0xa9, 0x2c,
-	0x48, 0x2d, 0x4e, 0x62, 0x03, 0x7b, 0xdf, 0x18, 0x10, 0x00, 0x00, 0xff, 0xff, 0xe1, 0xe1, 0x4b,
-	0x0d, 0x17, 0x01, 0x00, 0x00,
+	0x99, 0x39, 0xe9, 0xa9, 0xf9, 0x45, 0xe9, 0x99, 0xa9, 0x65, 0x7a, 0x30, 0x39, 0x28, 0xad, 0x94,
+	0xcc, 0xc5, 0xee, 0x03, 0x61, 0x0a, 0x45, 0x70, 0x09, 0xa6, 0xe6, 0x95, 0xa4, 0x16, 0xc5, 0x43,
+	0xe5, 0xe2, 0x4b, 0x2a, 0x8a, 0x25, 0x18, 0x15, 0x98, 0x35, 0xb8, 0x8d, 0x74, 0xf4, 0xf0, 0x19,
+	0xa2, 0xe7, 0x0a, 0xd2, 0x06, 0x35, 0x26, 0xa4, 0x22, 0x88, 0x3f, 0x15, 0x85, 0x5f, 0xac, 0x54,
+	0xce, 0xc5, 0x87, 0xaa, 0x44, 0x48, 0x91, 0x8b, 0xa7, 0xb4, 0x38, 0xb5, 0x28, 0x3e, 0x31, 0x25,
+	0xa5, 0x28, 0xb5, 0x18, 0x64, 0x0d, 0xa3, 0x06, 0x67, 0x10, 0x37, 0x48, 0xcc, 0x11, 0x22, 0x24,
+	0x24, 0xc0, 0xc5, 0x9c, 0x94, 0x5a, 0x22, 0xc1, 0xa4, 0xc0, 0xa8, 0xc1, 0x12, 0x04, 0x62, 0x0a,
+	0x89, 0x70, 0xb1, 0xa6, 0xa4, 0xe6, 0xe5, 0xe7, 0x4a, 0x30, 0x83, 0x55, 0x43, 0x38, 0x42, 0x52,
+	0x5c, 0x1c, 0x29, 0x89, 0x25, 0xa9, 0x25, 0x99, 0xb9, 0xa9, 0x12, 0x2c, 0x60, 0x09, 0x38, 0xdf,
+	0xc9, 0xf3, 0xc4, 0x23, 0x39, 0xc6, 0x0b, 0x8f, 0xe4, 0x18, 0x1f, 0x3c, 0x92, 0x63, 0x9c, 0xf0,
+	0x58, 0x8e, 0xe1, 0xc2, 0x63, 0x39, 0x86, 0x1b, 0x8f, 0xe5, 0x18, 0xa2, 0xf4, 0xd3, 0x33, 0x4b,
+	0x32, 0x4a, 0x93, 0xf4, 0x92, 0xf3, 0x73, 0xf5, 0x5d, 0x73, 0x33, 0x73, 0xdc, 0xa1, 0x7e, 0x83,
+	0x05, 0x9e, 0x7e, 0x05, 0x9c, 0x55, 0x52, 0x59, 0x90, 0x5a, 0x9c, 0xc4, 0x06, 0x0e, 0x4d, 0x63,
+	0x40, 0x00, 0x00, 0x00, 0xff, 0xff, 0xe6, 0x71, 0xa7, 0x8a, 0x66, 0x01, 0x00, 0x00,
 }
 
 func (m *Lottery) Marshal() (dAtA []byte, err error) {
@@ -171,10 +181,10 @@ func (m *Lottery) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if len(m.Users) > 0 {
-		for iNdEx := len(m.Users) - 1; iNdEx >= 0; iNdEx-- {
+	if len(m.EnterLotteryTxs) > 0 {
+		for iNdEx := len(m.EnterLotteryTxs) - 1; iNdEx >= 0; iNdEx-- {
 			{
-				size, err := m.Users[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				size, err := m.EnterLotteryTxs[iNdEx].MarshalToSizedBuffer(dAtA[:i])
 				if err != nil {
 					return 0, err
 				}
@@ -188,7 +198,7 @@ func (m *Lottery) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *User) Marshal() (dAtA []byte, err error) {
+func (m *EnterLotteryTx) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -198,16 +208,23 @@ func (m *User) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *User) MarshalTo(dAtA []byte) (int, error) {
+func (m *EnterLotteryTx) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *User) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *EnterLotteryTx) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if len(m.Datetime) > 0 {
+		i -= len(m.Datetime)
+		copy(dAtA[i:], m.Datetime)
+		i = encodeVarintLottery(dAtA, i, uint64(len(m.Datetime)))
+		i--
+		dAtA[i] = 0x22
+	}
 	if len(m.Denom) > 0 {
 		i -= len(m.Denom)
 		copy(dAtA[i:], m.Denom)
@@ -220,10 +237,10 @@ func (m *User) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x10
 	}
-	if len(m.Address) > 0 {
-		i -= len(m.Address)
-		copy(dAtA[i:], m.Address)
-		i = encodeVarintLottery(dAtA, i, uint64(len(m.Address)))
+	if len(m.UserAddress) > 0 {
+		i -= len(m.UserAddress)
+		copy(dAtA[i:], m.UserAddress)
+		i = encodeVarintLottery(dAtA, i, uint64(len(m.UserAddress)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -247,8 +264,8 @@ func (m *Lottery) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if len(m.Users) > 0 {
-		for _, e := range m.Users {
+	if len(m.EnterLotteryTxs) > 0 {
+		for _, e := range m.EnterLotteryTxs {
 			l = e.Size()
 			n += 1 + l + sovLottery(uint64(l))
 		}
@@ -256,13 +273,13 @@ func (m *Lottery) Size() (n int) {
 	return n
 }
 
-func (m *User) Size() (n int) {
+func (m *EnterLotteryTx) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.Address)
+	l = len(m.UserAddress)
 	if l > 0 {
 		n += 1 + l + sovLottery(uint64(l))
 	}
@@ -270,6 +287,10 @@ func (m *User) Size() (n int) {
 		n += 1 + sovLottery(uint64(m.Bet))
 	}
 	l = len(m.Denom)
+	if l > 0 {
+		n += 1 + l + sovLottery(uint64(l))
+	}
+	l = len(m.Datetime)
 	if l > 0 {
 		n += 1 + l + sovLottery(uint64(l))
 	}
@@ -313,7 +334,7 @@ func (m *Lottery) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Users", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field EnterLotteryTxs", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -340,8 +361,8 @@ func (m *Lottery) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Users = append(m.Users, &User{})
-			if err := m.Users[len(m.Users)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			m.EnterLotteryTxs = append(m.EnterLotteryTxs, &EnterLotteryTx{})
+			if err := m.EnterLotteryTxs[len(m.EnterLotteryTxs)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -366,7 +387,7 @@ func (m *Lottery) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *User) Unmarshal(dAtA []byte) error {
+func (m *EnterLotteryTx) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -389,15 +410,15 @@ func (m *User) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: User: wiretype end group for non-group")
+			return fmt.Errorf("proto: EnterLotteryTx: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: User: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: EnterLotteryTx: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field UserAddress", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -425,7 +446,7 @@ func (m *User) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Address = string(dAtA[iNdEx:postIndex])
+			m.UserAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 0 {
@@ -477,6 +498,38 @@ func (m *User) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.Denom = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Datetime", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLottery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthLottery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthLottery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Datetime = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

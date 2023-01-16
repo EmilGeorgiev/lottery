@@ -3,6 +3,7 @@ package types
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	"time"
 )
 
 const TypeMsgEnterLottery = "enter_lottery"
@@ -53,4 +54,8 @@ func (m *MsgEnterLottery) GetAddress() (address sdk.AccAddress, err error) {
 
 func (m *MsgEnterLottery) GetBetCoin() (wager sdk.Coin) {
 	return sdk.NewCoin(m.Denom, sdk.NewInt(int64(m.Bet)))
+}
+
+func FormatDateTime(date time.Time) string {
+	return date.UTC().Format(DeadlineLayout)
 }

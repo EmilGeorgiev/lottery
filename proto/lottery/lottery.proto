@@ -4,11 +4,12 @@ package emilgeorgiev.lottery.lottery;
 option go_package = "github.com/EmilGeorgiev/lottery/x/lottery/types";
 
 message Lottery {
-  repeated User users = 1;
+  repeated EnterLotteryTx enter_lottery_txs = 1;
 }
 
-message User {
-  string address = 1;
+message EnterLotteryTx {
+  string user_address = 1;
   uint64 bet = 2;
   string denom = 3;
+  string datetime = 4;
 }

@@ -15,10 +15,10 @@ func TestGenesis(t *testing.T) {
 		Params: types.DefaultParams(),
 
 		Lottery: types.Lottery{
-			Users: []*types.User{
-				{Address: "address1", Bet: 10},
-				{Address: "address2", Bet: 20},
-				{Address: "address3", Bet: 30},
+			EnterLotteryTxs: []*types.EnterLotteryTx{
+				{UserAddress: "address1", Bet: 10},
+				{UserAddress: "address2", Bet: 20},
+				{UserAddress: "address3", Bet: 30},
 			},
 		},
 		SystemInfo: types.SystemInfo{

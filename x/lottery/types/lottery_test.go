@@ -1,11 +1,11 @@
 package types_test
 
 import (
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"testing"
 
 	"github.com/EmilGeorgiev/lottery/x/lottery/types"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/stretchr/testify/require"
 )
 
@@ -14,7 +14,7 @@ const (
 	bob   = "cosmos1xyxs3skf3f4jfqeuv89yyaqvjc6lffavxqhc8g"
 )
 
-func TestLottery_RegisterNewUser(t *testing.T) {
+func TestLottery_RegisterEnterLotteryTx(t *testing.T) {
 	// SetUp
 	cases := []struct {
 		name         string
@@ -26,33 +26,33 @@ func TestLottery_RegisterNewUser(t *testing.T) {
 			name:         "The first user emter the lottery",
 			enterLottery: &types.MsgEnterLottery{Creator: "address1", Bet: 1},
 			current:      types.Lottery{},
-			expect: types.Lottery{Users: []*types.User{
-				{Address: "address1", Bet: 1},
+			expect: types.Lottery{EnterLotteryTxs: []*types.EnterLotteryTx{
+				{UserAddress: "address1", Bet: 1},
 			}},
 		},
 		{
 			name:         "New user enter the lottery",
 			enterLottery: &types.MsgEnterLottery{Creator: "address2", Bet: 2},
-			current: types.Lottery{Users: []*types.User{
-				{Address: "address1", Bet: 1},
+			current: types.Lottery{EnterLotteryTxs: []*types.EnterLotteryTx{
+				{UserAddress: "address1", Bet: 1},
 			}},
-			expect: types.Lottery{Users: []*types.User{
-				{Address: "address1", Bet: 1},
-				{Address: "address2", Bet: 2},
+			expect: types.Lottery{EnterLotteryTxs: []*types.EnterLotteryTx{
+				{UserAddress: "address1", Bet: 1},
+				{UserAddress: "address2", Bet: 2},
 			}},
 		},
 		{
 			name:         "User entered lottery more then once",
 			enterLottery: &types.MsgEnterLottery{Creator: "address2", Bet: 5},
-			current: types.Lottery{Users: []*types.User{
-				{Address: "address1", Bet: 1},
-				{Address: "address2", Bet: 2},
-				{Address: "address3", Bet: 3},
+			current: types.Lottery{EnterLotteryTxs: []*types.EnterLotteryTx{
+				{UserAddress: "address1", Bet: 1},
+				{UserAddress: "address2", Bet: 2},
+				{UserAddress: "address3", Bet: 3},
 			}},
-			expect: types.Lottery{Users: []*types.User{
-				{Address: "address1", Bet: 1},
-				{Address: "address2", Bet: 5},
-				{Address: "address3", Bet: 3},
+			expect: types.Lottery{EnterLotteryTxs: []*types.EnterLotteryTx{
+				{UserAddress: "address1", Bet: 1},
+				{UserAddress: "address2", Bet: 5},
+				{UserAddress: "address3", Bet: 3},
 			}},
 		},
 	}
@@ -60,7 +60,11 @@ func TestLottery_RegisterNewUser(t *testing.T) {
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {
 			// Action
-			c.current.RegisterNewUser(c.enterLottery)
+			c.current.RegisterNewTx(c.enterLottery)
+
+			for i, tx := range c.current.EnterLotteryTxs {
+				c.expect.EnterLotteryTxs[i].Datetime = tx.Datetime
+			}
 
 			// Assert
 			require.Equal(t, c.expect, c.current)
@@ -79,7 +83,7 @@ func TestLottery_GetLowestAndHighestBet(t *testing.T) {
 		{
 			name: "One lowest and one highest values",
 			lottery: types.Lottery{
-				Users: []*types.User{
+				EnterLotteryTxs: []*types.EnterLotteryTx{
 					{Bet: 1}, {Bet: 2}, {Bet: 3}, {Bet: 4}, {Bet: 5}, {Bet: 6},
 				},
 			},
@@ -89,7 +93,7 @@ func TestLottery_GetLowestAndHighestBet(t *testing.T) {
 		{
 			name: "More then one lowest and highest values",
 			lottery: types.Lottery{
-				Users: []*types.User{
+				EnterLotteryTxs: []*types.EnterLotteryTx{
 					{Bet: 40}, {Bet: 11}, {Bet: 60}, {Bet: 11}, {Bet: 30}, {Bet: 60},
 				},
 			},
@@ -99,7 +103,7 @@ func TestLottery_GetLowestAndHighestBet(t *testing.T) {
 		{
 			name: "All bets are equal",
 			lottery: types.Lottery{
-				Users: []*types.User{
+				EnterLotteryTxs: []*types.EnterLotteryTx{
 					{Bet: 5}, {Bet: 5}, {Bet: 5}, {Bet: 5}, {Bet: 5}, {Bet: 5},
 				},
 			},
@@ -130,7 +134,7 @@ func TestLottery_GetSumOfAllBets(t *testing.T) {
 		{
 			name: "Get sum of all bets",
 			lottery: types.Lottery{
-				Users: []*types.User{
+				EnterLotteryTxs: []*types.EnterLotteryTx{
 					{Bet: 1}, {Bet: 2}, {Bet: 3}, {Bet: 4}, {Bet: 5}, {Bet: 6},
 				},
 			},
@@ -139,7 +143,7 @@ func TestLottery_GetSumOfAllBets(t *testing.T) {
 		{
 			name: "Lottery has only one user",
 			lottery: types.Lottery{
-				Users: []*types.User{{Bet: 3}},
+				EnterLotteryTxs: []*types.EnterLotteryTx{{Bet: 3}},
 			},
 			expected: 3,
 		},
@@ -171,7 +175,7 @@ func TestLottery_GetSumOfAllBetsPlusFees(t *testing.T) {
 		{
 			name: "Get sum of all bets",
 			lottery: types.Lottery{
-				Users: []*types.User{
+				EnterLotteryTxs: []*types.EnterLotteryTx{
 					{Bet: 1}, {Bet: 2}, {Bet: 3}, {Bet: 4}, {Bet: 5}, {Bet: 6},
 				},
 			},
@@ -180,7 +184,7 @@ func TestLottery_GetSumOfAllBetsPlusFees(t *testing.T) {
 		{
 			name: "Lottery has only one user",
 			lottery: types.Lottery{
-				Users: []*types.User{{Bet: 3}},
+				EnterLotteryTxs: []*types.EnterLotteryTx{{Bet: 3}},
 			},
 			expected: 3 + types.EnterLotteryGas,
 		},

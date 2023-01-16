@@ -1,36 +1,39 @@
 package types
 
 import (
+	"time"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-// RegisterNewUser register a new user in the lottery. If
+// RegisterNewTx register a new user in the lottery. If
 // the user already exist then the last bet is counted.
-func (m *Lottery) RegisterNewUser(msg *MsgEnterLottery) *User {
-	u := &User{
-		Address: msg.Creator,
-		Bet:     msg.Bet,
-		Denom:   msg.Denom,
+func (m *Lottery) RegisterNewTx(msg *MsgEnterLottery) *EnterLotteryTx {
+	elt := &EnterLotteryTx{
+		UserAddress: msg.Creator,
+		Bet:         msg.Bet,
+		Denom:       msg.Denom,
+		Datetime:    FormatDateTime(time.Now()),
 	}
 
-	for i, user := range m.Users {
-		if user.Address == u.Address {
+	for i, tx := range m.EnterLotteryTxs {
+		if tx.UserAddress == elt.UserAddress {
 			// if the same user has new lottery transactions, then only the last
 			// one counts, counter doesn’t increase on substitution.
-			old := user
-			m.Users[i] = u
+			old := tx
+			m.EnterLotteryTxs[i] = elt
 			return old
 		}
 	}
-	m.Users = append(m.Users, u)
+	m.EnterLotteryTxs = append(m.EnterLotteryTxs, elt)
 	return nil
 }
 
 func (m *Lottery) GetLowestAndHighestBet() (uint64, uint64) {
-	lowest := m.Users[0].Bet
-	highest := m.Users[0].Bet
-	for _, u := range m.Users[1:] {
+	lowest := m.EnterLotteryTxs[0].Bet
+	highest := m.EnterLotteryTxs[0].Bet
+	for _, u := range m.EnterLotteryTxs[1:] {
 		if u.Bet < lowest {
 			lowest = u.Bet
 		}
@@ -42,14 +45,14 @@ func (m *Lottery) GetLowestAndHighestBet() (uint64, uint64) {
 }
 
 func (m *Lottery) GetSumOfAllBets() (result uint64) {
-	for _, u := range m.Users {
+	for _, u := range m.EnterLotteryTxs {
 		result += u.Bet
 	}
 	return
 }
 
 func (m *Lottery) GetSumOfAllBetsPlusFees() uint64 {
-	fees := uint64(len(m.Users) * EnterLotteryGas)
+	fees := uint64(len(m.EnterLotteryTxs) * EnterLotteryGas)
 	return m.GetSumOfAllBets() + fees
 }
 
