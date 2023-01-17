@@ -1,0 +1,5 @@
+project:
+  name: lottery
+  tz: Europe/Sofia
+  adrFolder: ./docs/adr
+  packages: []
