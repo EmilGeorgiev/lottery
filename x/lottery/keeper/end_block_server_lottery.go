@@ -15,7 +15,6 @@ const minUsersPerLottery = 10
 
 func (k *Keeper) ChooseWinner(goCtx context.Context) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-
 	lottery, found := k.GetLottery(ctx)
 	if !found {
 		panic("Lottery not found")
@@ -32,7 +31,16 @@ func (k *Keeper) ChooseWinner(goCtx context.Context) {
 		panic("SystemInfo not found")
 	}
 
-	// TODO check whether the validator has transaction.
+	// the chosen block proposer can't have any lottery transactions with itself
+	// as a sender, if this is the case, then the lottery won’t fire this block,
+	// and continue on the next one.
+	proposerAddr := string(ctx.BlockHeader().ProposerAddress)
+	for _, tx := range lottery.EnterLotteryTxs {
+		if tx.UserAddress == proposerAddr {
+			// The application will try fire the lottery in the next block
+			return
+		}
+	}
 
 	winnerIndex := getWinnerIndex(lottery.EnterLotteryTxs)
 	reward := k.PayReward(ctx, winnerIndex, &si, lottery)
