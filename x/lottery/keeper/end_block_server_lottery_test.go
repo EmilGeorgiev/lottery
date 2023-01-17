@@ -1,14 +1,24 @@
-package keeper
+package keeper_test
 
 import (
-	"fmt"
+	"context"
 	"testing"
 
+	keepertest "github.com/EmilGeorgiev/lottery/testutil/keeper"
+	"github.com/EmilGeorgiev/lottery/x/lottery"
+	"github.com/EmilGeorgiev/lottery/x/lottery/keeper"
+	"github.com/EmilGeorgiev/lottery/x/lottery/testutil"
 	"github.com/EmilGeorgiev/lottery/x/lottery/types"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/golang/mock/gomock"
 )
 
-func TestGetWinner(t *testing.T) {
-	txs := []*types.EnterLotteryTx{
+func setupKeeper(t testing.TB) (keeper.Keeper, context.Context, types.Lottery) {
+	ctrl := gomock.NewController(t)
+	bankMock := testutil.NewMockBankKeeper(ctrl)
+	k, ctx := keepertest.LotteryKeeperWithMock(t, bankMock)
+	lottery.InitGenesis(ctx, *k, *types.DefaultGenesis())
+	l := types.Lottery{EnterLotteryTxs: []*types.EnterLotteryTx{
 		{UserAddress: "cosmos19xn45se48ua3jjkdrpehq3gj9a00gg5gptmr09", Bet: 1, Denom: "token"},
 		{UserAddress: "cosmos1cpdt2j7jfhaek504t56wpfv0zrq83ez8q4u335", Bet: 2, Denom: "token"},
 		{UserAddress: "cosmos1yhfshaufadllmr5p2588mu6uv7cuddzgzxfr4t", Bet: 3, Denom: "token"},
@@ -29,7 +39,16 @@ func TestGetWinner(t *testing.T) {
 		{UserAddress: "cosmos1jgwue7rjjglesw6l86ydedlsepl6ulz04hg3qp", Bet: 18, Denom: "token"},
 		{UserAddress: "cosmos1zml56sa8ngxrs0txsv5hqujjgcerr6fmr6a95t", Bet: 19, Denom: "token"},
 		{UserAddress: "cosmos1xfzyzyxy9ynmwpcpk6tn4635tarcqdfu42cxh9", Bet: 20, Denom: "token"},
-	}
-	got := getWinnerIndex(txs)
-	fmt.Println(got)
+	}}
+	k.SetLottery(ctx, l)
+	return *k, sdk.WrapSDKContext(ctx), l
+}
+
+func TestChooseWinnerOfTheLottery(t *testing.T) {
+	//// Set up
+	//k, ctx, _ := setupKeeper(t)
+	////sdkCtx := sdk.UnwrapSDKContext(ctx)
+	//
+	//// Action
+	//k.ChooseWinner(ctx)
 }
