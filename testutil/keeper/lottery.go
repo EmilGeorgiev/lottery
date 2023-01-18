@@ -19,10 +19,10 @@ import (
 )
 
 func LotteryKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {
-	return LotteryKeeperWithMock(t, nil)
+	return LotteryKeeperWithMock(t, nil, nil)
 }
 
-func LotteryKeeperWithMock(t testing.TB, bank *testutil.MockBankKeeper) (*keeper.Keeper, sdk.Context) {
+func LotteryKeeperWithMock(t testing.TB, bank *testutil.MockBankKeeper, account *testutil.MockAccountKeeper) (*keeper.Keeper, sdk.Context) {
 	storeKey := sdk.NewKVStoreKey(types.StoreKey)
 	memStoreKey := storetypes.NewMemoryStoreKey(types.MemStoreKey)
 
@@ -47,6 +47,7 @@ func LotteryKeeperWithMock(t testing.TB, bank *testutil.MockBankKeeper) (*keeper
 		memStoreKey,
 		paramsSubspace,
 		bank,
+		account,
 	)
 
 	ctx := sdk.NewContext(stateStore, tmproto.Header{}, false, log.NewNopLogger())

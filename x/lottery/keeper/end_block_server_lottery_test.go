@@ -16,7 +16,8 @@ import (
 func setupKeeper(t testing.TB) (keeper.Keeper, context.Context, types.Lottery) {
 	ctrl := gomock.NewController(t)
 	bankMock := testutil.NewMockBankKeeper(ctrl)
-	k, ctx := keepertest.LotteryKeeperWithMock(t, bankMock)
+	accMock := testutil.NewMockAccountKeeper(ctrl)
+	k, ctx := keepertest.LotteryKeeperWithMock(t, bankMock, accMock)
 	lottery.InitGenesis(ctx, *k, *types.DefaultGenesis())
 	l := types.Lottery{EnterLotteryTxs: []*types.EnterLotteryTx{
 		{UserAddress: "cosmos19xn45se48ua3jjkdrpehq3gj9a00gg5gptmr09", Bet: 1, Denom: "token"},

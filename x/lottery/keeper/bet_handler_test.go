@@ -28,7 +28,8 @@ func setupTest(t testing.TB) (keeper.Keeper, context.Context,
 	*gomock.Controller, *testutil.MockBankKeeper, types.Lottery) {
 	ctrl := gomock.NewController(t)
 	bankMock := testutil.NewMockBankKeeper(ctrl)
-	k, ctx := keepertest.LotteryKeeperWithMock(t, bankMock)
+	accMock := testutil.NewMockAccountKeeper(ctrl)
+	k, ctx := keepertest.LotteryKeeperWithMock(t, bankMock, accMock)
 	lottery.InitGenesis(ctx, *k, *types.DefaultGenesis())
 
 	l := types.Lottery{EnterLotteryTxs: []*types.EnterLotteryTx{

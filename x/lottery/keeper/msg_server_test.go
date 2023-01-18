@@ -17,7 +17,8 @@ func setupMsgServer(t testing.TB) (types.MsgServer, keeper.Keeper, context.Conte
 	*gomock.Controller, *testutil.MockBankKeeper) {
 	ctrl := gomock.NewController(t)
 	bankMock := testutil.NewMockBankKeeper(ctrl)
-	k, ctx := keepertest.LotteryKeeperWithMock(t, bankMock)
+	accMock := testutil.NewMockAccountKeeper(ctrl)
+	k, ctx := keepertest.LotteryKeeperWithMock(t, bankMock, accMock)
 	lottery.InitGenesis(ctx, *k, *types.DefaultGenesis())
 	server := keeper.NewMsgServerImpl(*k)
 	context := sdk.WrapSDKContext(ctx)

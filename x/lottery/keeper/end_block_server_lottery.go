@@ -26,23 +26,27 @@ func (k *Keeper) ChooseWinner(goCtx context.Context) {
 		return
 	}
 
-	si, found := k.GetSystemInfo(ctx)
-	if !found {
-		panic("SystemInfo not found")
-	}
-
-	// the chosen block proposer can't have any lottery transactions with itself
-	// as a sender, if this is the case, then the lottery won’t fire this block,
-	// and continue on the next one.
-	proposerAddr := string(ctx.BlockHeader().ProposerAddress)
+	// Check whether the proposer has transaction in the lottery.
+	proposerAddr := sdk.ConsAddress(ctx.BlockHeader().ProposerAddress)
 	for _, tx := range lottery.EnterLotteryTxs {
-		if tx.UserAddress == proposerAddr {
-			// The application will try fire the lottery in the next block
+		accAddr, err := types.GetAddress(tx.UserAddress)
+		if err != nil {
+			panic(err.Error())
+		}
+		acc := k.accaunt.GetAccount(ctx, accAddr)
+		consAddr := sdk.ConsAddress(acc.GetPubKey().Address())
+		if proposerAddr.Equals(consAddr) {
+			// the chosen block proposer can't have any lottery transactions with itself as a sender,
+			// if this is the case, then the lottery won’t fire this block, and continue on the next one
 			return
 		}
 	}
 
-	winnerIndex := getWinnerIndex(lottery.EnterLotteryTxs)
+	winnerIndex := getWinnerIndex(lottery)
+	si, found := k.GetSystemInfo(ctx)
+	if !found {
+		panic("SystemInfo not found")
+	}
 	reward := k.PayReward(ctx, winnerIndex, &si, lottery)
 	fl := types.FinishedLottery{
 		Index:           strconv.FormatUint(si.NextId, 10),
@@ -56,17 +60,12 @@ func (k *Keeper) ChooseWinner(goCtx context.Context) {
 	k.SetSystemInfo(ctx, si)
 	lottery = types.Lottery{}
 	k.SetLottery(ctx, lottery)
-
 }
 
-func getWinnerIndex(txs []*types.EnterLotteryTx) int64 {
-	var data []byte
-	for _, tx := range txs {
-		b, _ := proto.Marshal(tx)
-		data = append(data, b...)
-	}
+func getWinnerIndex(l types.Lottery) int64 {
+	data, _ := proto.Marshal(&l)
 	b := md5.Sum(data)
 	hex := fmt.Sprintf("%x", b[len(b)-2:])
 	n, _ := strconv.ParseInt(hex, 16, 64)
-	return n % int64(len(txs))
+	return n % int64(len(l.EnterLotteryTxs))
 }
