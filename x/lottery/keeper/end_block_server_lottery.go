@@ -34,7 +34,7 @@ func (k *Keeper) ChooseWinner(goCtx context.Context) {
 			panic(err.Error())
 		}
 		acc := k.accaunt.GetAccount(ctx, accAddr)
-		consAddr := sdk.ConsAddress(acc.GetPubKey().Address())
+		consAddr := sdk.GetConsAddress(acc.GetPubKey())
 		if proposerAddr.Equals(consAddr) {
 			// the chosen block proposer can't have any lottery transactions with itself as a sender,
 			// if this is the case, then the lottery won’t fire this block, and continue on the next one
