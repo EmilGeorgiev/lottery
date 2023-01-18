@@ -21,16 +21,17 @@ type UserBalances struct {
 func main() {
 	users := getUsers()
 
+	var usersThatHasEnoughFunds []user
 	for n := 0; n < 100; n++ {
-		numberOfClientsWithEnoughTokens := 0
+
 		for i, u := range users {
-			bet := fmt.Sprintf("%d", i+1)
+			bet := fmt.Sprintf("%d", u.bet)
 			cmd := exec.Command("lotteryd", "tx", "lottery", "enter-lottery", bet, "token", "--from", u.address, "--fees", "5token", "-y")
 
 			if _, err := cmd.Output(); err != nil {
 				fmt.Println(err)
 			}
-			fmt.Printf("Client%d, Bet number: %d\n", i+1, n+1)
+			fmt.Printf("Client%d, Bet: %d, for the %d times \n", u.bet, u.bet, n+1)
 
 			// check whether the used has enough funds to enter the next lottery
 			resp, err := http.Get(fmt.Sprintf("http://localhost:1317/cosmos/bank/v1beta1/balances/%s", u.address))
@@ -55,21 +56,26 @@ func main() {
 			}
 
 			if balance < int64(5+i+1) {
+				fmt.Printf("Client%d with address %s is out of funds.\n", u.bet, u.address)
 				continue
 			}
-			numberOfClientsWithEnoughTokens++
+			usersThatHasEnoughFunds = append(usersThatHasEnoughFunds, u)
 		}
 
-		if numberOfClientsWithEnoughTokens < 10 {
+		if len(usersThatHasEnoughFunds) < 10 {
 			fmt.Println("There are less then 10 clients with enough tokens to enter the next lottery.")
 			os.Exit(0)
 			return
 		}
+
+		users = usersThatHasEnoughFunds
+		usersThatHasEnoughFunds = []user{}
 	}
 }
 
 type user struct {
 	address string
+	bet     int64
 }
 
 func getUsers() []user {
@@ -79,7 +85,10 @@ func getUsers() []user {
 		client := fmt.Sprintf("client%d", i+1)
 		cmd := exec.Command("lotteryd", "keys", "show", client, "-a")
 		out, _ := cmd.Output()
-		users[i] = user{address: string(out[:len(out)-1])} // cut last byte because it is a new line "\n"
+		users[i] = user{
+			address: string(out[:len(out)-1]), // cut last byte because it is a new line "\n"
+			bet:     int64(i + 1),
+		}
 	}
 
 	return users
