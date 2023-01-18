@@ -1,17 +1,69 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"net/http"
+	"os"
 	"os/exec"
+	"strconv"
 )
+
+type Balance struct {
+	Denom  string `json:"denom"`
+	Amount string `json:"amount"`
+}
+
+type UserBalances struct {
+	Balances []Balance `json:"balances"`
+}
 
 func main() {
 	users := getUsers()
-	for i, u := range users {
-		bet := fmt.Sprintf("%d", i+1)
-		cmd := exec.Command("lotteryd", "tx", "lottery", "enter-lottery", bet, "token", "--from", u.address, "--fees", "5token", "-y")
-		if _, err := cmd.Output(); err != nil {
-			fmt.Println(err)
+
+	for n := 0; n < 100; n++ {
+		numberOfClientsWithEnoughTokens := 0
+		for i, u := range users {
+			bet := fmt.Sprintf("%d", i+1)
+			cmd := exec.Command("lotteryd", "tx", "lottery", "enter-lottery", bet, "token", "--from", u.address, "--fees", "5token", "-y")
+
+			if _, err := cmd.Output(); err != nil {
+				fmt.Println(err)
+			}
+			fmt.Printf("Client%d, Bet number: %d\n", i+1, n+1)
+
+			// check whether the used has enough funds to enter the next lottery
+			resp, err := http.Get(fmt.Sprintf("http://localhost:1317/cosmos/bank/v1beta1/balances/%s", u.address))
+			if err != nil {
+				fmt.Printf("Can't get balance of the client: %s, error: %s\n", u.address, err.Error())
+				continue
+			}
+
+			var ub UserBalances
+			if err = json.NewDecoder(resp.Body).Decode(&ub); err != nil {
+				fmt.Println("can't decode response: ", err.Error())
+			}
+
+			if len(ub.Balances) == 0 {
+				continue
+			}
+
+			balance, err := strconv.ParseInt(ub.Balances[0].Amount, 10, 64)
+			if err != nil {
+				fmt.Println("Can't parse the balance: ", err)
+				continue
+			}
+
+			if balance < int64(5+i+1) {
+				continue
+			}
+			numberOfClientsWithEnoughTokens++
+		}
+
+		if numberOfClientsWithEnoughTokens < 10 {
+			fmt.Println("There are less then 10 clients with enough tokens to enter the next lottery.")
+			os.Exit(0)
+			return
 		}
 	}
 }
