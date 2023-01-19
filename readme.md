@@ -1,15 +1,18 @@
 # lottery
 **lottery** is a blockchain built using Cosmos SDK and Tendermint and created with [Ignite CLI](https://ignite.com/cli).
 
-In the **.docs/adr** you can find all descriptive information for architecture decisions.
+In the [.docs/adr](https://github.com/EmilGeorgiev/lottery/tree/master/docs/adr) you can find all descriptive information 
+for architecture decisions.
 
-This readme file contain two DEMO examples one for happy path and one for edge cases that the lottery
-handler. For the DEMO is used a small cmd program placed in .cmd/demo/main.go. Also the folder
-.cmd/demo/ contains files with the results of the local execution of the DEMO.
+This readme file contains two DEMO examples one for [happy path](https://github.com/EmilGeorgiev/lottery#demo) and one 
+for [edge cases](https://github.com/EmilGeorgiev/lottery#demo-edge-cases) that the lottery
+handle. For the DEMO is used a small cmd program that is placed in [.cmd/demo/main.go](https://github.com/EmilGeorgiev/lottery/blob/master/cmd/demo/main.go). 
+Also, the folder [.cmd/demo/](https://github.com/EmilGeorgiev/lottery/tree/master/cmd/demo) contains files with the 
+results of the local execution of the DEMO.
 
-At the end of this file you can see the answers of the bonus strategies questions.
+At the end of this file, you can see the answers of the [Bonus Strategies](https://github.com/EmilGeorgiev/lottery#bonus-strategy) questions.
 
-What is not implement. Block on every 5 minutes is not implemented. You can find why in ADR-10.
+What was not implemented? Block on every 5 minutes is not implemented. You can find why in ADR-10.
 
 ### Rules of the lottery
 
@@ -19,31 +22,34 @@ transactions. If there weren’t enough transactions, the lottery continues. Onc
 
 ## Get started
 
-First you should have Ignite CLI installed on you computer. This application is build with version v0.25.2. To install it at the command line
+First, you should have Ignite CLI installed on your computer. This application is built with version v0.25.2. 
+To install it at the command line type this command
 
 ```
 curl https://get.ignite.com/cli@v0.25.2! | bash
 ```
+
 You can verify the version of Ignite CLI you have once it is installed:
 
 ```
 ignite version
 ```
 
-This prints its version:
+This prints:
 
 ```
 Ignite CLI version:	v0.25.2
 ...
 ```
 
-When you are at lottery folder run this command to start the chain 
+When you are in the lottery folder run this command to start the chain 
 
 ```
 ignite chain serve
 ```
 
-The command compiles the source code into a binary called **lotteryd**. It installs dependencies, builds, initializes the node with a single validator, add accounts, and starts your blockchain in development.
+The command compiles the source code into a binary called **lotteryd**. It installs dependencies, builds, initializes 
+the node with a single validator, adds accounts, and starts your blockchain in development.
 
 ### Configure
 
@@ -51,17 +57,17 @@ Your blockchain in development can be configured with `config.yml`. To learn mor
 
 ## DEMO
 
-In the previous steps we started the application now we can interact with it through sending queries and transactions.
-The project contains a simple client application that sends 20 entered lottery transaction from 20 different clients, 
+In the previous steps, we started the application now we can interact with it by sending queries and transactions.
+The simple client application will send 20 entered lottery transactions from 20 different clients, 
 with 20 different bets. For example *client1: 1token*, *client2: 2token*, *client3: 3token*, ... and so on. These 20 
-transactions are repeat 100 times or until the clients run out of funds.  Run the command below to execute the client:
+transactions are repeated 100 times or until the clients run out of funds.  Run the command below to execute the client:
 
 ```
 go run ./cmd/demo/main.go
 ```
 
-This program can take several minutes. After it finished we can see the results (**N0TE we will execute a large number 
-with commands, your result from the commands will be different from main.**). 
+This program can take several minutes. After it finished we can see the results. 
+(**N0TE we will execute a large number with commands, your result from the commands will be different from the main.**). 
 
 #### List all finished lotteries
 
@@ -73,11 +79,10 @@ lotteryd query lottery list-finished-lottery --limit 200
 
 The result is:
 
-![img_5.png](img_5.png)
+![.cmd/demo/images/img_5.png](img_5.png)
 
-The output is too big, you can an example of the result in the file .cmd/demo/list-finished-lotteries.
+The output is too big, you can an example of the result in the file [cmd/demo/list-finished-lotteries](https://github.com/EmilGeorgiev/lottery/blob/master/cmd/demo/list-finished-lotteries).
 **NOTE** the file contains just an example. The data in the file is not from your execution of the program.
-
 
 #### Get the system info
 
@@ -89,14 +94,14 @@ lotteryd query lottery show-system-info
 
 The result is:
 
-![img_6.png](img_6.png)
+![.cmd/demo/images/img_6.png](img_6.png)
 
-As we can see in the lottery pool we have **240token** that will be paid as reward to next winner which placed the heights bet.
-The system-info show and what will be nextID of the next finished lottery.
+As we can see in the lottery pool we have **240token** that will be paid as a reward to the next winner who placed the heights bet.
+The system-info show what will be the **nextID** of the next finished lottery.
 
 #### Get all balances of the clients
 
-First we should export addresses of the clients in variables:
+First, we should export the addresses of the clients in variables:
 
 ```
 export client1=$(lotteryd keys show client1 -a) 
@@ -121,7 +126,7 @@ export client19=$(lotteryd keys show client19 -a)
 export client20=$(lotteryd keys show client20 -a)
 ```
 
-Then we can use these exported variable to get the balances:
+Then we can use these exported variables to get the balances:
 
 ```
 lotteryd query bank balances $client1
@@ -146,14 +151,14 @@ lotteryd query bank balances $client19
 lotteryd query bank balances $client20
 ```
 
-An example of the result  for the client2 is:
+An example of the result for the client2 is:
 
-![img_7.png](img_7.png)
+![.cmd/demo/images/img_7.png](img_7.png)
 
-In the file ./cmd/demo/balances you can all balances. 
+In the file [./cmd/demo/balances](https://github.com/EmilGeorgiev/lottery/blob/master/cmd/demo/balances) you can see all balances. 
 **NOTE** the file contains an example. This is not your data:
 
-![img.png](img.png)
+![.cmd/demo/images/img.png](img.png)
 
 
 #### Get the current lottery:
@@ -166,17 +171,17 @@ lotteryd query lottery show-lottery
 
 The result is:
 
-![img_8.png](img_8.png)
+![.cmd/demo/images/img_8.png](img_8.png)
 
 As we can see the current lottery has zero transactions.
 
 
-#### How can we be sure that the lottery works correctly
+#### How can we be sure that the lottery works correctly?
 
-Let's check whether lottery working correctly. For example, we will use the client2 and will follow all his bets 
-and rewards, we will calculate his balance and we will see whether our result mach the with the actual balance.  
+Let's check whether the lottery working correctly. For example, we will use the client2 and will follow all his bets 
+and rewards, we will calculate his balance and we will see whether our result matches the actual balance.  
 
- - First we will get his address
+ - First, we will get his address
 
 ```
 lotteryd keys show client2 -a
@@ -188,8 +193,8 @@ The result is:
 cosmos1kngwxau7zp6aydwqj9n2rwxes47xxrkcfxgs2w
 ```
 
- - calculate all the payments that the client2 was made. We know that the client2 always place the bet with **2token**, 
-also we know that he must pay fee of **5token** per transaction. If we know the number of all lotteries in which the 
+ - calculate all the payments that **client2** made. We know that the client2 always places the bet with **2token**, 
+also we know that he must pay a fee of **5token** per transaction. If we know the number of all lotteries in which the 
 client2 placed a valid bet, we can calculate the total payments. Let's get that number by using this command:
 
 ```
@@ -198,9 +203,9 @@ lotteryd query lottery list-finished-lottery --limit 200 | grep -c "user_address
 
 The result is:
 
-![img_9.png](img_9.png)
+![.cmd/demo/images/img_9.png](img_9.png)
 
-The user placed  **81** valid bets. This means that he paid 5token fee + 2token, total 7token per bet. The total tokens 
+The user placed  **81** valid bets. This means that he paid 5token fee + **2token**, total a **7token** per bet. The total tokens 
 that he paid are **81x7 = 567**
 
  - check how many times the client2 won the lottery. We can see the result by using the command:
@@ -211,12 +216,12 @@ lotteryd query lottery list-finished-lottery --limit 200 | grep -B 2 -A 1 "winne
 
 The result is:
 
-![img_10.png](img_10.png)
+![.cmd/demo/images/img_10.png](img_10.png)
 
-The client2 won 9 times the lottery. Also, from the picture we can see how much rewards he got for every lottery. 
-(100+55+55+55+55+55+115+75+133= 698). If we take ot the payments from the rewards 698-567 = 131 is the profit. 
+client2 won 9 times the lottery. Also, from the picture, we can see how many rewards he got for every lottery. 
+(100+55+55+55+55+55+115+75+133= 698). If we take out the payments from the rewards 698-567 = 131 is the profit. 
 If we add the profit to the initial balance (500token) we will get that
-thr balance of the client2 should be **631token** we can confirm that:
+the balance of the client2 should be **631token** we can confirm that:
 
  - Confirm that the balance of the client is **631token**.  
 
@@ -226,17 +231,17 @@ lotteryd query bank balances cosmos1kngwxau7zp6aydwqj9n2rwxes47xxrkcfxgs2w
 
 The result is:
 
-![img_12.png](img_12.png)
+![.cmd/demo/images/img_12.png](img_12.png)
 
 As we can see the balance is 631token, as we expected. 
 
 ## DEMO edge cases
 
-In this demo we will test some edge cases
+In this demo, we will test some edge cases
 
-### User can't place a bet without exactly 5 fees.
+### Users can't place a bet without exactly 5 fees.
 
- - User can't place a bet without any fees:
+ - Users can't place a bet without any fees:
 
 ```
 lotteryd tx lottery enter-lottery 1 token --from cosmos1kngwxau7zp6aydwqj9n2rwxes47xxrkcfxgs2w -y
@@ -248,7 +253,7 @@ The result is:
 raw_log: 'Tx must contains exactly 5 fee: insufficient fee'
 ```
 
- - User can't place a bet with the lowest fees then 5
+ - The user can't place a bet with a lower fee than 5
 
 ```
 lotteryd tx lottery enter-lottery 1 token --from cosmos1kngwxau7zp6aydwqj9n2rwxes47xxrkcfxgs2w --fees 4token -y
@@ -258,9 +263,9 @@ The result is:
 
 ```
 raw_log: 'Tx must contains exactly 5 fee: insufficient fee'
-```
+``` 
 
- - User can't place a bet with higher fees then 5
+ - Users can't place a bet with a fee higher than 5
 
 ```
 lotteryd tx lottery enter-lottery 1 token --from cosmos1kngwxau7zp6aydwqj9n2rwxes47xxrkcfxgs2w --fees 6token -y
@@ -282,12 +287,12 @@ lotteryd tx lottery enter-lottery 101 token --from cosmos1wkx4pmsmy0hkc9xurhz4mx
 
 Then we can see that the current lottery is empty. The bet is not placed:
 
-![img_13.png](img_13.png)
+![.cmd/demo/images/img_13.png](img_13.png)
 
 
-### The lottery won't fire if there are leas then 10 users
+### The lottery won't fire if there are fewer than 10 users
 
- - place 9  bets from 9 different clients. **NOTE** you should have addresses of the clients exported in variables. 
+ - place 9  bets from 9 different clients. **NOTE** you should have the addresses of the clients exported in variables. 
 We did that already
 
 ```
@@ -310,7 +315,7 @@ lotteryd query lottery show-lottery
 
 The result is
 
-![img_14.png](img_14.png)
+![.cmd/demo/images/img_14.png](img_14.png)
 
 
 There are 9 transactions in the lottery and the lottery will not fire. We can list the finished lotteries:
@@ -321,7 +326,7 @@ lotteryd query lottery list-finished-lottery
 
 the result is
 
-![img_15.png](img_15.png)    
+![.cmd/demo/images/img_15.png](img_15.png)    
 
 as we can see the list is empty. But if we place one more bet:
 
@@ -331,16 +336,16 @@ lotteryd tx lottery enter-lottery 10 token --from client10 --fees 5token -y
 
 Then the current lottery is:
 
-![img_17.png](img_17.png)
+![.cmd/demo/images/img_17.png](img_17.png)
 
 
 And the finished lotteries are
 
-![img_16.png](img_16.png)
+![.cmd/demo/images/img_16.png](img_16.png)
 
 The system-info is:
 
-![img_18.png](img_18.png)
+![.cmd/demo/images/img_18.png](img_18.png)
 
 
 ## Bonus strategy
@@ -355,33 +360,33 @@ the whole lottery pool from the current and previous lotteries. Also, it is impo
 avoid cases in which he is out of money. 
 
 Let's test the strategy. Run the application with 10 clients with a balance of 50000 tokens. Everyone participates 
-in the 100 lotteries. The result is: client1 has 90109tokens in the balance.  
+in the 100 lotteries. The result is: client1 has **90109token** in the balance.  
 
-![img_1.png](img_1.png)
+![.cmd/demo/images/img_1.png](img_1.png)
 
-The all other clients have 44701.
+The all other clients have **44701token**.
 
-![img_2.png](img_2.png)
+![.cmd/demo/images/img_2.png](img_2.png)
 
-We confirm that this the best strategy for the client 1 
+We confirm that this is the best strategy for client1 
 
 
 ### 2. Assuming uniform random bet from all other clients, and client1 behaves in the strategy mentioned (1.), what is the best strategy for client2?
 
-Let's test the strategy and see the result. Let's say that we have 10 clients with 50000token balance, the clients 
-one and two place the highest bet (100), and all other clients place random bet. After the test finished we see that 
+Let's test the strategy and see the result. Let's say that we have 10 clients with 50000token balance, client1
+and client2 place the highest bet (100), and all other clients place a random bet. After the test finished we see that
 the first two players have bigger balances:
  
-![img_3.png](img_3.png)
+![.cmd/demo/images/img_3.png](img_3.png)
 
-All other players suffer a loss. They have 44701token in their balances: 
+All other players suffer a loss. They have **44701token** in their balances: 
 
-![img_4.png](img_4.png)
+![.cmd/demo/images/img_4.png](img_4.png)
 
 ### 3. What is the Nash equilibrium?
 
 We have Nash equilibrium when all players placed the highest bet (100). This is also **strict** Nash equilibrium because 
-every one player will suffer a loss by changing his strategy.  
+every player will suffer a loss by changing his strategy.  
 
 
 ### Install
