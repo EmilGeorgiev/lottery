@@ -1,4 +1,4 @@
-# Keep all fees in the lottery module at least the lottery doesn't finished. Then send fees to FeeCollector
+# ADR-003: Keep all fees in the lottery module at least the lottery doesn't finished. Then send fees to FeeCollector
 
 - Status: accepted
 - Deciders: Emil Georgiev (emogeorgiev88@gmail.com)

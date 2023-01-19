@@ -1,4 +1,4 @@
-# Use the bank module to transfer coins
+# ADR-008 Use the bank module to transfer coins
 
 - Status: accepted
 - Deciders: Emil Georgiev (emogeorgiev88@gmail.com)

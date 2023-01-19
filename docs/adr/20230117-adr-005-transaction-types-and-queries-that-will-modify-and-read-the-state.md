@@ -1,4 +1,4 @@
-# Transaction types and queries that will modify and read the state
+# ADR-005: Transaction types and queries that will modify and read the state
 
 - Status: accepted
 - Deciders: Emil Georgiev (emogeorgiev88@gmail.com)

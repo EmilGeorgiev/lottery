@@ -1,4 +1,4 @@
-# New field DateTime to the enter lottery tx
+# ADR-009: New field DateTime to the enter lottery tx
 
 - Status: accepted
 - Deciders: Emil Georgiev

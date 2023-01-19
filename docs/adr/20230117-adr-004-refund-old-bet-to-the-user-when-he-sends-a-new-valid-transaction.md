@@ -1,4 +1,4 @@
-# Refund old bet to the user when he sends a new valid transaction
+# ADR-004: Refund old bet to the user when he sends a new valid transaction
 
 - Status: accepted
 - Deciders: Emil Georgiev (emogeorgiev88@gmail.com)

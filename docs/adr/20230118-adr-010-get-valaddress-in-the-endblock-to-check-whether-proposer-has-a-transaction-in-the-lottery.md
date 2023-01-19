@@ -1,4 +1,4 @@
-# Get ConsAddress of the proposer in the EndBlock and check whether he has a transaction in the lottery
+# ADR-10: Get ConsAddress of the proposer in the EndBlock and check whether he has a transaction in the lottery
 
 - Status: [draft | proposed | rejected | accepted | deprecated | … | superseded by [xxx](yyyymmdd-xxx.md)] <!-- optional -->
 - Deciders: [list everyone involved in the decision] <!-- optional -->

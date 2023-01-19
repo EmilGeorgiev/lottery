@@ -1,4 +1,4 @@
-# Custom AnteHanlder to deduct fees from the sender account
+# ADR-002: Custom AnteHanlder to deduct fees from the sender account
 
 - Status: accepted
 - Deciders: [Emil Georgiev (emogeorgiev88@gmail.com)]

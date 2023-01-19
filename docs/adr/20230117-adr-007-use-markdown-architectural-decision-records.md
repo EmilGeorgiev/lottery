@@ -1,4 +1,4 @@
-# Use Markdown Architectural Decision Records
+# ADR-007: Use Markdown Architectural Decision Records
 
 - Status: accepted
 - Date: 2023-01-16
@@ -39,4 +39,4 @@ The "Log4brains patch" performs the following modifications to the original temp
 
 ## Links
 
-- Relates to [Use Log4brains to manage the ADRs](20230117-use-log4brains-to-manage-the-adrs.md)
+- Relates to [Use Log4brains to manage the ADRs](20230117-adr-006-use-log4brains-to-manage-the-adrs.md)

@@ -1,4 +1,4 @@
-# Use Log4brains to manage the ADRs
+# ADR-006: Use Log4brains to manage the ADRs
 
 - Status: accepted
 - Date: 2023-01-16

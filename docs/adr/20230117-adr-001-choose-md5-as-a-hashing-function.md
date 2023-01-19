@@ -1,4 +1,4 @@
-# Use MD5 as a hashing function when calculating the winner
+# ADR-001: Use MD5 as a hashing function when calculating the winner
 
 - Status: accepted
 - Deciders Emil Georgiev (emogeorgioev88@gmail.com)
