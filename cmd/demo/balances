@@ -1,0 +1,79 @@
+client1
+- amount: "14"
+  denom: token
+
+client2
+- amount: "631"
+  denom: token
+
+client3:
+- amount: "582"
+  denom: token
+
+client4:
+- amount: "218"
+  denom: token
+
+client5:
+- amount: "6"
+  denom: token
+
+client6:
+- amount: "31"
+  denom: token
+
+client7
+- amount: "445"
+  denom: token
+
+client8:
+- amount: "100"
+  denom: token
+
+client9:
+- amount: "111"
+  denom: token
+
+client10:
+- amount: "5"
+  denom: token
+
+client11:
+- amount: "15"
+  denom: token
+
+client12:
+- amount: "9"
+  denom: token
+
+client13
+- amount: "12"
+  denom: token
+
+client14
+- amount: "9"
+  denom: token
+
+client15
+- amount: "10"
+  denom: token
+
+client16
+- amount: "8"
+  denom: token
+
+client17
+- amount: "427"
+  denom: token
+
+client18
+- amount: "17"
+  denom: token
+
+client19
+- amount: "12"
+  denom: token
+
+client20
+- amount: "1023"
+  denom: token

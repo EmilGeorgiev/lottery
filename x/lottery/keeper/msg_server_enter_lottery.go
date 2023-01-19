@@ -56,7 +56,7 @@ func (k msgServer) EnterLottery(goCtx context.Context, msg *types.MsgEnterLotter
 
 func (k msgServer) validate(ctx sdk.Context, msg *types.MsgEnterLottery) error {
 	if msg.Bet > maxBet {
-		return fmt.Errorf(types.ErrExceedMaxBet.Error(), msg.Bet, maxBet)
+		return sdkerrors.Wrap(fmt.Errorf(types.ErrExceedMaxBet.Error(), msg.Bet, maxBet), "Bet is too higher")
 	}
 
 	adr, err := msg.GetAddress()

@@ -28,7 +28,7 @@ func main() {
 			bet := fmt.Sprintf("%d", u.bet)
 			cmd := exec.Command("lotteryd", "tx", "lottery", "enter-lottery", bet, "token", "--from", u.address, "--fees", "5token", "-y")
 
-			if _, err := cmd.Output(); err != nil {
+			if err := cmd.Run(); err != nil {
 				fmt.Println(err)
 			}
 			fmt.Printf("Client%d, Bet: %d, for the %d times \n", u.bet, u.bet, n+1)
