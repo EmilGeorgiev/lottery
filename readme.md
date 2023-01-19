@@ -75,6 +75,12 @@ gex
 
 ## DEMO
 
+First clone the project from GitHub:
+
+```
+git clone git@github.com:EmilGeorgiev/lottery.git
+```
+
 In the previous steps, we started the application now we can interact with it by sending queries and transactions.
 The simple client application will send 20 entered lottery transactions from 20 different clients, 
 with 20 different bets. For example *client1: 1token*, *client2: 2token*, *client3: 3token*, ... and so on. These 20 
