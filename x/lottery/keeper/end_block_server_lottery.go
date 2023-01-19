@@ -51,7 +51,6 @@ func (k *Keeper) ChooseWinner(goCtx context.Context) {
 		panic("SystemInfo not found")
 	}
 	reward := k.PayReward(ctx, winnerIndex, &si, lottery)
-	index := strconv.FormatUint(si.NextId, 10)
 	fl := types.FinishedLottery{
 		Index:           strconv.FormatUint(si.NextId, 10),
 		Winner:          lottery.EnterLotteryTxs[winnerIndex].UserAddress,
@@ -67,9 +66,9 @@ func (k *Keeper) ChooseWinner(goCtx context.Context) {
 
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(types.ChooseLotteryWinnerEventType,
-			sdk.NewAttribute(types.LotteryWinner, lottery.EnterLotteryTxs[winnerIndex].UserAddress),
-			sdk.NewAttribute(types.LotteryReward, strconv.FormatUint(reward, 10)),
-			sdk.NewAttribute(types.LotteryIndex, index),
+			sdk.NewAttribute(types.LotteryWinner, fl.Winner),
+			sdk.NewAttribute(types.LotteryReward, strconv.FormatUint(fl.Reward, 10)),
+			sdk.NewAttribute(types.LotteryIndex, fl.Index),
 		),
 	)
 }
