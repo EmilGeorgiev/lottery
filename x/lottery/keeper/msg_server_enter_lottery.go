@@ -3,15 +3,17 @@ package keeper
 import (
 	"context"
 	"fmt"
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"strconv"
 
 	"github.com/EmilGeorgiev/lottery/x/lottery/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
 const maxBet = 100
 
+// EnterLottery handle transactions from the clients that want to enter the lottery.
+// If the transaction is valid the coins are transferred from the account to the module.
 func (k msgServer) EnterLottery(goCtx context.Context, msg *types.MsgEnterLottery) (*types.MsgEnterLotteryResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	if err := k.validate(ctx, msg); err != nil {
@@ -49,7 +51,7 @@ func (k msgServer) EnterLottery(goCtx context.Context, msg *types.MsgEnterLotter
 		),
 	)
 
-	return &types.MsgEnterLotteryResponse{}, nil
+	return &types.MsgEnterLotteryResponse{RegisteredUsers: uint64(len(lottery.EnterLotteryTxs))}, nil
 }
 
 func (k msgServer) validate(ctx sdk.Context, msg *types.MsgEnterLottery) error {

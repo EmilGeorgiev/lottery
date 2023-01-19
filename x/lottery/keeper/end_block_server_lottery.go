@@ -4,15 +4,18 @@ import (
 	"context"
 	"crypto/md5"
 	"fmt"
-	"github.com/gogo/protobuf/proto"
 	"strconv"
 
 	"github.com/EmilGeorgiev/lottery/x/lottery/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/gogo/protobuf/proto"
 )
 
 const minUsersPerLottery = 10
 
+// ChooseWinner is called in the EndBlock. The method will choose a winner if there are a minimum
+// of users in the lottery and the reward will be transferred to the winner's account.
+// The finished lottery will be stored and an event will be pushed.
 func (k *Keeper) ChooseWinner(goCtx context.Context) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	lottery, found := k.GetLottery(ctx)
@@ -71,6 +74,9 @@ func (k *Keeper) ChooseWinner(goCtx context.Context) {
 	)
 }
 
+// getWinnerIndex append the data of the transactions (retaining their order), then hash the data to get the result.
+// Then, take the lowest 16 bits of the resulting hash and do a modulo on the number of lottery transactions
+// to determine the winner! The winner index is returned. For the hashing is used MD5.
 func getWinnerIndex(l types.Lottery) int64 {
 	data, _ := proto.Marshal(&l)
 	b := md5.Sum(data)

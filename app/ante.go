@@ -50,7 +50,7 @@ func NewAnteHandler(options HandlerOptions) (sdk.AnteHandler, error) {
 		ante.NewConsumeGasForTxSizeDecorator(options.AccountKeeper),
 		//ante.NewDeductFeeDecorator(options.AccountKeeper, options.BankKeeper, options.FeegrantKeeper),
 		// Fee calculation must be called after fees
-		fees.NewDeductFeeDecorator(options.AccountKeeper, options.BankKeeper),
+		fees.NewDeductFeeDecorator(options.BankKeeper),
 		ante.NewSetPubKeyDecorator(options.AccountKeeper), // SetPubKeyDecorator must be called before all signature verification decorators
 		ante.NewValidateSigCountDecorator(options.AccountKeeper),
 		ante.NewSigGasConsumeDecorator(options.AccountKeeper, sigGasConsumer),

@@ -12,21 +12,28 @@ import (
 // Call next AnteHandler if tax successfully sent.
 // CONTRACT: Tx must implement FeeTx interface to use DeductFeeDecorator.
 type DeductFeeDecorator struct {
-	ak types.AccountKeeper
 	bk types.BankKeeper
 }
 
-func NewDeductFeeDecorator(ak types.AccountKeeper, bk types.BankKeeper) DeductFeeDecorator {
+// NewDeductFeeDecorator initialize and return a new DeductFeeDecorator.
+func NewDeductFeeDecorator(bk types.BankKeeper) DeductFeeDecorator {
 	return DeductFeeDecorator{
-		ak: ak,
 		bk: bk,
 	}
 }
 
+// AnteHandle is a custom implementation of the AnteHandle. It deducts fees from the sender account when MsgEnterLottery
+// transaction is sent. Also, it validates the fees and if the amount is not enough an error is returned.
+//
+// NOTE: if this handler is used you must not use the default deduct handler, because the client will be charged twice.
+// By default, the ante handle deduct fees from the sender account to the fee collector. For now, we don't want that,
+// because the fees can be paid as reward to the winner of the lottery.
 func (dtd DeductFeeDecorator) AnteHandle(ctx sdk.Context, tx sdk.Tx, simulate bool, next sdk.AnteHandler) (newCtx sdk.Context, err error) {
 	if len(tx.GetMsgs()) > 0 {
 		_, ok := tx.GetMsgs()[0].(*types.MsgEnterLottery)
 		if !ok {
+			// if the tx is different from types.MsgEnterLottery we don't want
+			// to charge the sender. There is no requirements for that.
 			return next(ctx, tx, simulate)
 		}
 	}
@@ -45,8 +52,7 @@ func (dtd DeductFeeDecorator) AnteHandle(ctx sdk.Context, tx sdk.Tx, simulate bo
 		return sdk.Context{}, sdkerrors.Wrap(sdkerrors.ErrInsufficientFee, fmt.Sprintf("Tx must contains exactly %d fee", types.TxFee))
 	}
 
-	ctx.Logger().Info("Deducted tax: 5")
-	// Send tax to fee collector
+	// Send fees to the module
 	tax := sdk.NewCoin("token", sdk.NewInt(5))
 	if err = dtd.bk.SendCoinsFromAccountToModule(ctx, feeTx.FeePayer(), types.ModuleName, sdk.Coins{tax}); err != nil {
 		return ctx, sdkerrors.Wrapf(sdkerrors.ErrInsufficientFunds, err.Error())

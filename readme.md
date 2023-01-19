@@ -12,7 +12,7 @@ results of the local execution of the DEMO.
 
 At the end of this file, you can see the answers of the [Bonus Strategies](https://github.com/EmilGeorgiev/lottery#bonus-strategy) questions.
 
-What was not implemented? Block on every 5 minutes is not implemented. You can find why in ADR-10.
+What was not implemented? Block on every 5 minutes is not implemented. You can find why in [ADR-11](https://github.com/EmilGeorgiev/lottery/blob/master/docs/adr/20230119-adr-011-block-on-every-5-minutes.md).
 
 ### Rules of the lottery
 
@@ -79,7 +79,7 @@ lotteryd query lottery list-finished-lottery --limit 200
 
 The result is:
 
-![.cmd/demo/images/img_5.png](img_5.png)
+![.cmd/demo/images/img_5.png](.cmd/demo/images/img_5.png)
 
 The output is too big, you can an example of the result in the file [cmd/demo/list-finished-lotteries](https://github.com/EmilGeorgiev/lottery/blob/master/cmd/demo/list-finished-lotteries).
 **NOTE** the file contains just an example. The data in the file is not from your execution of the program.
@@ -94,7 +94,7 @@ lotteryd query lottery show-system-info
 
 The result is:
 
-![.cmd/demo/images/img_6.png](img_6.png)
+![.cmd/demo/images/img_6.png](.cmd/demo/images/img_6.png)
 
 As we can see in the lottery pool we have **240token** that will be paid as a reward to the next winner who placed the heights bet.
 The system-info show what will be the **nextID** of the next finished lottery.
@@ -153,12 +153,12 @@ lotteryd query bank balances $client20
 
 An example of the result for the client2 is:
 
-![.cmd/demo/images/img_7.png](img_7.png)
+![.cmd/demo/images/img_7.png](.cmd/demo/images/img_7.png)
 
 In the file [./cmd/demo/balances](https://github.com/EmilGeorgiev/lottery/blob/master/cmd/demo/balances) you can see all balances. 
 **NOTE** the file contains an example. This is not your data:
 
-![.cmd/demo/images/img.png](img.png)
+![.cmd/demo/images/img.png](.cmd/demo/images/img.png)
 
 
 #### Get the current lottery:
@@ -171,7 +171,7 @@ lotteryd query lottery show-lottery
 
 The result is:
 
-![.cmd/demo/images/img_8.png](img_8.png)
+![.cmd/demo/images/img_8.png](.cmd/demo/images/img_8.png)
 
 As we can see the current lottery has zero transactions.
 
@@ -203,7 +203,7 @@ lotteryd query lottery list-finished-lottery --limit 200 | grep -c "user_address
 
 The result is:
 
-![.cmd/demo/images/img_9.png](img_9.png)
+![.cmd/demo/images/img_9.png](.cmd/demo/images/img_9.png)
 
 The user placed  **81** valid bets. This means that he paid 5token fee + **2token**, total a **7token** per bet. The total tokens 
 that he paid are **81x7 = 567**
@@ -216,7 +216,7 @@ lotteryd query lottery list-finished-lottery --limit 200 | grep -B 2 -A 1 "winne
 
 The result is:
 
-![.cmd/demo/images/img_10.png](img_10.png)
+![.cmd/demo/images/img_10.png](.cmd/demo/images/img_10.png)
 
 client2 won 9 times the lottery. Also, from the picture, we can see how many rewards he got for every lottery. 
 (100+55+55+55+55+55+115+75+133= 698). If we take out the payments from the rewards 698-567 = 131 is the profit. 
@@ -231,7 +231,7 @@ lotteryd query bank balances cosmos1kngwxau7zp6aydwqj9n2rwxes47xxrkcfxgs2w
 
 The result is:
 
-![.cmd/demo/images/img_12.png](img_12.png)
+![.cmd/demo/images/img_12.png](.cmd/demo/images/img_12.png)
 
 As we can see the balance is 631token, as we expected. 
 
@@ -287,7 +287,7 @@ lotteryd tx lottery enter-lottery 101 token --from cosmos1wkx4pmsmy0hkc9xurhz4mx
 
 Then we can see that the current lottery is empty. The bet is not placed:
 
-![.cmd/demo/images/img_13.png](img_13.png)
+![.cmd/demo/images/img_13.png](.cmd/demo/images/img_13.png)
 
 
 ### The lottery won't fire if there are fewer than 10 users
@@ -315,7 +315,7 @@ lotteryd query lottery show-lottery
 
 The result is
 
-![.cmd/demo/images/img_14.png](img_14.png)
+![.cmd/demo/images/img_14.png](.cmd/demo/images/img_14.png)
 
 
 There are 9 transactions in the lottery and the lottery will not fire. We can list the finished lotteries:
@@ -326,7 +326,7 @@ lotteryd query lottery list-finished-lottery
 
 the result is
 
-![.cmd/demo/images/img_15.png](img_15.png)    
+![.cmd/demo/images/img_15.png](.cmd/demo/images/img_15.png)    
 
 as we can see the list is empty. But if we place one more bet:
 
@@ -336,16 +336,16 @@ lotteryd tx lottery enter-lottery 10 token --from client10 --fees 5token -y
 
 Then the current lottery is:
 
-![.cmd/demo/images/img_17.png](img_17.png)
+![.cmd/demo/images/img_17.png](.cmd/demo/images/img_17.png)
 
 
 And the finished lotteries are
 
-![.cmd/demo/images/img_16.png](img_16.png)
+![.cmd/demo/images/img_16.png](.cmd/demo/images/img_16.png)
 
 The system-info is:
 
-![.cmd/demo/images/img_18.png](img_18.png)
+![.cmd/demo/images/img_18.png](.cmd/demo/images/img_18.png)
 
 
 ## Bonus strategy
@@ -362,11 +362,11 @@ avoid cases in which he is out of money.
 Let's test the strategy. Run the application with 10 clients with a balance of 50000 tokens. Everyone participates 
 in the 100 lotteries. The result is: client1 has **90109token** in the balance.  
 
-![.cmd/demo/images/img_1.png](img_1.png)
+![.cmd/demo/images/img_1.png](.cmd/demo/images/img_1.png)
 
 The all other clients have **44701token**.
 
-![.cmd/demo/images/img_2.png](img_2.png)
+![.cmd/demo/images/img_2.png](.cmd/demo/images/img_2.png)
 
 We confirm that this is the best strategy for client1 
 
@@ -377,11 +377,11 @@ Let's test the strategy and see the result. Let's say that we have 10 clients wi
 and client2 place the highest bet (100), and all other clients place a random bet. After the test finished we see that
 the first two players have bigger balances:
  
-![.cmd/demo/images/img_3.png](img_3.png)
+![.cmd/demo/images/img_3.png](.cmd/demo/images/img_3.png)
 
 All other players suffer a loss. They have **44701token** in their balances: 
 
-![.cmd/demo/images/img_4.png](img_4.png)
+![.cmd/demo/images/img_4.png](.cmd/demo/images/img_4.png)
 
 ### 3. What is the Nash equilibrium?
 

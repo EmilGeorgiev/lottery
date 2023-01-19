@@ -45,11 +45,11 @@ func setupKeeper(t testing.TB) (keeper.Keeper, context.Context, types.Lottery) {
 	return *k, sdk.WrapSDKContext(ctx), l
 }
 
-func TestChooseWinnerOfTheLottery(t *testing.T) {
-	//// Set up
-	//k, ctx, _ := setupKeeper(t)
-	////sdkCtx := sdk.UnwrapSDKContext(ctx)
-	//
-	//// Action
-	//k.ChooseWinner(ctx)
+func TestChooseWinnerOfTheLotteryWhenThereAreNoEnoughUsersInTheLottery(t *testing.T) {
+	// Set up
+	k, ctx, _ := setupKeeper(t)
+	k.SetLottery(sdk.UnwrapSDKContext(ctx), types.Lottery{})
+
+	// Action
+	k.ChooseWinner(ctx)
 }
