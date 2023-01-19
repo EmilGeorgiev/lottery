@@ -30,6 +30,11 @@ const (
 	EnterLotteryEventType = "enter-lottery"
 	EnterLotteryEventUser = "user"
 	EnterLotteryEventBet  = "bet"
+
+	ChooseLotteryWinnerEventType = "choose-lottery-winner"
+	LotteryWinner                = "lottery-winner"
+	LotteryReward                = "lottery-reward"
+	LotteryIndex                 = "lottery-index"
 )
 
 func KeyPrefix(p string) []byte {

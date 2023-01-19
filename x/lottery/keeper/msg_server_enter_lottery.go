@@ -42,8 +42,6 @@ func (k msgServer) EnterLottery(goCtx context.Context, msg *types.MsgEnterLotter
 	}
 	k.Keeper.SetLottery(ctx, lottery)
 
-	//ctx.GasMeter().ConsumeGas(types.EnterLotteryGas, "Enter lottery")
-
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(types.EnterLotteryEventType,
 			sdk.NewAttribute(types.EnterLotteryEventUser, msg.Creator),
